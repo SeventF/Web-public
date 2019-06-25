@@ -1,0 +1,2540 @@
+-- phpMyAdmin SQL Dump
+-- version 3.2.3
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Mar 11, 2011 at 07:05 PM
+-- Server version: 5.1.40
+-- PHP Version: 5.2.12
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Database: `seminform`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_attachments`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_attachments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(80) NOT NULL,
+  `filename_sys` varchar(255) NOT NULL,
+  `file_type` varchar(30) NOT NULL,
+  `file_size` int(11) unsigned NOT NULL,
+  `icon_filename` varchar(20) NOT NULL,
+  `display_filename` varchar(80) NOT NULL DEFAULT '',
+  `description` varchar(255) NOT NULL DEFAULT '',
+  `url` varchar(255) NOT NULL,
+  `uploader_id` int(11) NOT NULL,
+  `article_id` int(11) unsigned NOT NULL,
+  `published` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `user_field_1` varchar(100) NOT NULL DEFAULT '',
+  `user_field_2` varchar(100) NOT NULL DEFAULT '',
+  `user_field_3` varchar(100) NOT NULL DEFAULT '',
+  `create_date` datetime DEFAULT NULL,
+  `modification_date` datetime DEFAULT NULL,
+  `download_count` int(11) unsigned DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `attachment_article_id_index` (`article_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_attachments`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_banner`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_banner` (
+  `bid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) NOT NULL DEFAULT '0',
+  `type` varchar(30) NOT NULL DEFAULT 'banner',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `imptotal` int(11) NOT NULL DEFAULT '0',
+  `impmade` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(11) NOT NULL DEFAULT '0',
+  `imageurl` varchar(100) NOT NULL DEFAULT '',
+  `clickurl` varchar(200) NOT NULL DEFAULT '',
+  `date` datetime DEFAULT NULL,
+  `showBanner` tinyint(1) NOT NULL DEFAULT '0',
+  `checked_out` tinyint(1) NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `editor` varchar(50) DEFAULT NULL,
+  `custombannercode` text,
+  `catid` int(10) unsigned NOT NULL DEFAULT '0',
+  `description` text NOT NULL,
+  `sticky` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `tags` text NOT NULL,
+  `params` text NOT NULL,
+  PRIMARY KEY (`bid`),
+  KEY `viewbanner` (`showBanner`),
+  KEY `idx_banner_catid` (`catid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_banner`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_bannerclient`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_bannerclient` (
+  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `contact` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `extrainfo` text NOT NULL,
+  `checked_out` tinyint(1) NOT NULL DEFAULT '0',
+  `checked_out_time` time DEFAULT NULL,
+  `editor` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`cid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_bannerclient`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_bannertrack`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_bannertrack` (
+  `track_date` date NOT NULL,
+  `track_type` int(10) unsigned NOT NULL,
+  `banner_id` int(10) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_bannertrack`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `image` varchar(255) NOT NULL DEFAULT '',
+  `section` varchar(50) NOT NULL DEFAULT '',
+  `image_position` varchar(30) NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `editor` varchar(50) DEFAULT NULL,
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `count` int(11) NOT NULL DEFAULT '0',
+  `params` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cat_idx` (`section`,`published`,`access`),
+  KEY `idx_access` (`access`),
+  KEY `idx_checkout` (`checked_out`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+
+--
+-- Dumping data for table `jos_categories`
+--
+
+INSERT INTO `jos_categories` (`id`, `parent_id`, `title`, `name`, `alias`, `image`, `section`, `image_position`, `description`, `published`, `checked_out`, `checked_out_time`, `editor`, `ordering`, `access`, `count`, `params`) VALUES
+(1, 0, 'Компьютеры', '', '2010-09-06-10-01-29', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 1, 0, 0, ''),
+(2, 0, 'мониторы', '', '2010-09-06-10-01-45', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 2, 0, 0, ''),
+(3, 0, 'программное обеспечение', '', '2010-09-06-10-02-01', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 3, 0, 0, ''),
+(4, 0, 'принтеры, сканеры, ксероксы', '', '2010-09-06-10-02-13', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 4, 0, 0, ''),
+(5, 0, 'защитные устройства', '', '2010-09-06-10-02-30', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 5, 0, 0, ''),
+(6, 0, 'мультимедиа', '', '2010-09-06-10-02-43', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 6, 0, 0, ''),
+(7, 0, 'аксессуары', '', '2010-09-06-10-02-58', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 7, 0, 0, ''),
+(8, 0, 'клавиатуры,манипуляторы', '', '2010-09-06-10-03-21', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 8, 0, 0, ''),
+(11, 0, 'другое', '', '2010-09-06-10-04-38', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 12, 0, 0, ''),
+(12, 0, 'процессора', '', '2010-09-06-10-04-51', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 11, 0, 0, ''),
+(13, 0, 'память', '', '2010-09-06-10-05-08', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 13, 0, 0, ''),
+(14, 0, 'материнские платы', '', '2010-09-06-10-05-25', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 14, 0, 0, ''),
+(15, 0, 'видеокарты', '', '2010-09-06-10-08-13', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 15, 0, 0, ''),
+(16, 0, 'накопители информации', '', '2010-09-06-10-08-27', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 16, 0, 0, ''),
+(17, 0, 'модемы', '', '2010-09-06-10-08-49', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 17, 0, 0, ''),
+(19, 0, 'картриджи', '', '2010-09-06-10-09-17', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 19, 0, 0, ''),
+(28, 0, 'Информация', '', '2010-09-07-16-15-49', '', '8', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 1, 0, 0, ''),
+(21, 0, 'сетевое оборудование', '', '2010-09-06-10-09-53', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 21, 0, 0, ''),
+(29, 0, 'О нас', '', '2010-09-07-17-02-04', '', '9', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 1, 0, 0, ''),
+(24, 0, 'кассовые аппараты', '', '2010-09-06-10-11-14', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 24, 0, 0, ''),
+(25, 0, 'факсы и телефоны', '', '2010-09-06-10-11-43', '', '1', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 25, 0, 0, ''),
+(26, 0, 'наши услуги', '', '2010-09-06-13-47-34', '', '7', 'left', '<ul><li class="MsoNormal" style="color: blue; line-height: normal"><font face="times new roman,times" color="#000000"><span style="font-size: 13.5pt; font-family: ''Comic Sans MS''">Компьютерная      техника (компьютеры, ноутбуки любой конфигурации, комплектующие)      </span></font></li><li class="MsoNormal" style="color: blue; line-height: normal"><font face="times new roman,times" color="#000000"><span style="font-size: 13.5pt; font-family: ''Comic Sans MS''">Программное      обеспечение (Microsoft, Касперский и т.д.) </span></font></li><li class="MsoNormal" style="color: blue; line-height: normal"><font face="times new roman,times" color="#000000"><span style="font-size: 13.5pt; font-family: ''Comic Sans MS''">Кабельные      системы (сетевое оборудование и др.) </span></font></li><li class="MsoNormal" style="color: blue; line-height: normal"><font face="times new roman,times" color="#000000"><span style="font-size: 13.5pt; font-family: ''Comic Sans MS''">Офисная техника      (принтеры, МФУ, АТС, телефоны, факсы  и др.) </span></font></li><li class="MsoNormal" style="color: blue; line-height: normal"><font face="times new roman,times" color="#000000"><span style="font-size: 13.5pt; font-family: ''Comic Sans MS''">Расходные      материалы (картриджи для принтеров, бумага, тонер и др.) </span></font></li><li class="MsoNormal" style="color: blue; line-height: normal"><font face="times new roman,times" color="#000000"><span style="font-size: 13.5pt; font-family: ''Comic Sans MS''">Заправка      картриджей </span></font></li><li class="MsoNormal" style="color: blue; line-height: normal"><font face="times new roman,times" color="#000000"><span style="font-size: 13.5pt; font-family: ''Comic Sans MS''">Копировальная      техника </span></font></li><li class="MsoNormal" style="color: blue; line-height: normal"><font face="times new roman,times" color="#000000"><span style="font-size: 13.5pt; font-family: ''Comic Sans MS''">Ремонт и      обслуживание компьютерной, офисной и периферийной техники, кассовых аппаратов </span></font></li><li class="MsoNormal" style="color: blue; line-height: normal"><font face="times new roman,times" color="#000000"><span style="font-size: 13.5pt; font-family: ''Comic Sans MS''">Модернизация      компьютерной техники (замена старой техники на новую)</span></font></li></ul>', 1, 0, '0000-00-00 00:00:00', NULL, 1, 0, 0, ''),
+(27, 0, 'Администрация', '', '2010-09-06-16-27-59', '', 'com_contact_details', 'left', '', 1, 0, '0000-00-00 00:00:00', NULL, 1, 0, 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_ccnewsletter_acknowledgement`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_ccnewsletter_acknowledgement` (
+  `id` int(2) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `synstatus` tinyint(1) NOT NULL DEFAULT '0',
+  `activation` tinyint(1) NOT NULL DEFAULT '0',
+  `subs_title` varchar(255) NOT NULL DEFAULT '',
+  `subs_content` mediumtext NOT NULL,
+  `unsubs_title` varchar(255) NOT NULL DEFAULT '',
+  `unsubs_content` mediumtext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_ccnewsletter_acknowledgement`
+--
+
+INSERT INTO `jos_ccnewsletter_acknowledgement` (`id`, `status`, `synstatus`, `activation`, `subs_title`, `subs_content`, `unsubs_title`, `unsubs_content`) VALUES
+(1, 0, 0, 1, 'Письмо подтверждения подписки', 'Поздравляем Вас вы стали нашим подписчиком', 'Письмо подтверждения отписки', 'Нам очень жаль терять такого подписчика...');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_ccnewsletter_newsletters`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_ccnewsletter_newsletters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `body` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `jos_ccnewsletter_newsletters`
+--
+
+INSERT INTO `jos_ccnewsletter_newsletters` (`id`, `name`, `body`) VALUES
+(1, 'My First Newsletter', '<div id="newsletter" align="center">\n <table border="0" cellspacing="0" cellpadding="0" width="800"><tbody>\n <tr><td colspan="3" height="100" background="administrator/components/com_ccnewsletter/assets/bg_image.gif"></td></tr>\n <tr><td width="10" height="30"></td><td width="780" height="30">\n <img src="administrator/components/com_ccnewsletter/assets/30pxVertical.gif" border="0" width="4" height="30" /></td>\n <td width="10" height="30"></td></tr><tr><td></td>\n <td> Hello [name] , </td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td>\n <td><p> You''re receiving my website''s first newsletter created by ccNewsletter! This new component will allow me to stay in touch with you, \n and my other users, on a regular basis.</p><p>&nbsp;</p><p>Take Care!</p><p>&nbsp;</p><p>The Management </p></td>\n <td></td></tr><tr><td></td><td></td><td></td></tr><tr><td style="height: 30px"></td>\n <td><font color="#808080">To unsubscribe from our mailing list, please use the following link:\n [unsubscribe link]</font></td><td></td></tr><tr><td></td>\n <td> <img src="administrator/components/com_ccnewsletter/assets/30pxVertical.gif" border="0" width="4" height="30" /></td>\n <td></td></tr><tr align="right"><td colspan="3" height="100" background="administrator/components/com_ccnewsletter/assets/bg_image.gif">\n </td></tr>\n </tbody></table> </div>');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_ccnewsletter_subscribers`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_ccnewsletter_subscribers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `email` text NOT NULL,
+  `plainText` tinyint(1) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `sdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_ccnewsletter_subscribers`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_components`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_components` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `link` varchar(255) NOT NULL DEFAULT '',
+  `menuid` int(11) unsigned NOT NULL DEFAULT '0',
+  `parent` int(11) unsigned NOT NULL DEFAULT '0',
+  `admin_menu_link` varchar(255) NOT NULL DEFAULT '',
+  `admin_menu_alt` varchar(255) NOT NULL DEFAULT '',
+  `option` varchar(50) NOT NULL DEFAULT '',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `admin_menu_img` varchar(255) NOT NULL DEFAULT '',
+  `iscore` tinyint(4) NOT NULL DEFAULT '0',
+  `params` text NOT NULL,
+  `enabled` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `parent_option` (`parent`,`option`(32))
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=60 ;
+
+--
+-- Dumping data for table `jos_components`
+--
+
+INSERT INTO `jos_components` (`id`, `name`, `link`, `menuid`, `parent`, `admin_menu_link`, `admin_menu_alt`, `option`, `ordering`, `admin_menu_img`, `iscore`, `params`, `enabled`) VALUES
+(1, 'Баннеры', '', 0, 0, '', 'Управление баннерами', 'com_banners', 0, 'js/ThemeOffice/component.png', 0, 'track_impressions=0\ntrack_clicks=0\ntag_prefix=\n\n', 1),
+(2, 'Баннеры', '', 0, 1, 'option=com_banners', 'Активные баннеры', 'com_banners', 1, 'js/ThemeOffice/edit.png', 0, '', 1),
+(3, 'Клиенты', '', 0, 1, 'option=com_banners&c=client', 'Управление клиентами', 'com_banners', 2, 'js/ThemeOffice/categories.png', 0, '', 1),
+(4, 'Веб-ссылки', 'option=com_weblinks', 0, 0, '', 'Управление ссылками', 'com_weblinks', 0, 'js/ThemeOffice/component.png', 0, 'show_comp_description=1\ncomp_description=\nshow_link_hits=1\nshow_link_description=1\nshow_other_cats=1\nshow_headings=1\nshow_page_title=1\nlink_target=0\nlink_icons=\n\n', 1),
+(5, 'Ссылки', '', 0, 4, 'option=com_weblinks', 'Просмотр существующих ссылок', 'com_weblinks', 1, 'js/ThemeOffice/edit.png', 0, '', 1),
+(6, 'Категории ссылок', '', 0, 4, 'option=com_categories&section=com_weblinks', 'Управление категориями ссылок', '', 2, 'js/ThemeOffice/categories.png', 0, '', 1),
+(7, 'Контакты', 'option=com_contact', 0, 0, '', 'Редактировать контактную информацию', 'com_contact', 0, 'js/ThemeOffice/component.png', 1, 'contact_icons=0\nicon_address=\nicon_email=\nicon_telephone=\nicon_fax=\nicon_misc=\nshow_headings=1\nshow_position=1\nshow_email=0\nshow_telephone=1\nshow_mobile=1\nshow_fax=1\nbannedEmail=\nbannedSubject=\nbannedText=\nsession=1\ncustomReply=0\n\n', 1),
+(8, 'Контакты', '', 0, 7, 'option=com_contact', 'Редактировать контактную информацию', 'com_contact', 0, 'js/ThemeOffice/edit.png', 1, '', 1),
+(9, 'Категории контактов', '', 0, 7, 'option=com_categories&section=com_contact_details', 'Управление категориями контактов', '', 2, 'js/ThemeOffice/categories.png', 1, 'contact_icons=0\nicon_address=\nicon_email=\nicon_telephone=\nicon_fax=\nicon_misc=\nshow_headings=1\nshow_position=1\nshow_email=0\nshow_telephone=1\nshow_mobile=1\nshow_fax=1\nbannedEmail=\nbannedSubject=\nbannedText=\nsession=1\ncustomReply=0\n\n', 1),
+(10, 'Опросы', 'option=com_poll', 0, 0, 'option=com_poll', 'Управление опросами', 'com_poll', 0, 'js/ThemeOffice/component.png', 0, '', 1),
+(11, 'Каналы новостей', 'option=com_newsfeeds', 0, 0, '', 'Управление настройками каналов новостей', 'com_newsfeeds', 0, 'js/ThemeOffice/component.png', 0, '', 1),
+(12, 'Каналы новостей', '', 0, 11, 'option=com_newsfeeds', 'Управление каналами новостей', 'com_newsfeeds', 1, 'js/ThemeOffice/edit.png', 0, 'show_headings=1\nshow_name=1\nshow_articles=1\nshow_link=1\nshow_cat_description=1\nshow_cat_items=1\nshow_feed_image=1\nshow_feed_description=1\nshow_item_description=1\nfeed_word_count=0\n\n', 1),
+(13, 'Категории', '', 0, 11, 'option=com_categories&section=com_newsfeeds', 'Управление категориями', '', 2, 'js/ThemeOffice/categories.png', 0, '', 1),
+(14, 'Пользователь', 'option=com_user', 0, 0, '', '', 'com_user', 0, '', 1, '', 1),
+(15, 'Статистика поиска', 'option=com_search', 0, 0, 'option=com_search', 'Статистика поиска', 'com_search', 0, 'js/ThemeOffice/component.png', 1, 'enabled=0\n\n', 1),
+(16, 'Категории', '', 0, 1, 'option=com_categories&section=com_banner', 'Категории', '', 3, '', 1, '', 1),
+(17, 'Фрейм (Wrapper)', 'option=com_wrapper', 0, 0, '', 'Фрейм (Wrapper)', 'com_wrapper', 0, '', 1, '', 1),
+(18, 'Отправка писем', '', 0, 0, '', '', 'com_mailto', 0, '', 1, '', 1),
+(19, 'Управление медиа', '', 0, 0, 'option=com_media', 'Управление медиа', 'com_media', 0, '', 1, 'upload_extensions=bmp,csv,doc,epg,gif,ico,jpg,odg,odp,ods,odt,pdf,png,ppt,swf,txt,xcf,xls,BMP,CSV,DOC,EPG,GIF,ICO,JPG,ODG,ODP,ODS,ODT,PDF,PNG,PPT,SWF,TXT,XCF,XLS,RAR,ZIP\nupload_maxsize=10000000\nfile_path=images\nimage_path=images/stories\nrestrict_uploads=1\nallowed_media_usergroup=3\ncheck_mime=1\nimage_extensions=bmp,gif,jpg,png\nignore_extensions=\nupload_mime=image/jpeg,image/gif,image/png,image/bmp,application/x-shockwave-flash,application/msword,application/excel,application/pdf,application/powerpoint,text/plain,application/x-zip\nupload_mime_illegal=text/html\nenable_flash=0\n\n', 1),
+(20, 'Статьи', 'option=com_content', 0, 0, '', '', 'com_content', 0, '', 1, 'show_noauth=1\nshow_title=1\nlink_titles=1\nshow_intro=1\nshow_section=0\nlink_section=0\nshow_category=0\nlink_category=0\nshow_author=1\nshow_create_date=1\nshow_modify_date=0\nshow_item_navigation=0\nshow_readmore=1\nshow_vote=1\nshow_icons=1\nshow_pdf_icon=1\nshow_print_icon=1\nshow_email_icon=1\nshow_hits=0\nfeed_summary=0\nfilter_tags=\nfilter_attritbutes=\n\n', 1),
+(21, 'Конфигурация', '', 0, 0, '', 'Общая конфигурация', 'com_config', 0, '', 1, '', 1),
+(22, 'Установка расширений', '', 0, 0, '', 'Установка расширений', 'com_installer', 0, '', 1, '', 1),
+(23, 'Локализации', '', 0, 0, '', 'Пакеты локализаций', 'com_languages', 0, '', 1, 'administrator=ru-RU\nsite=ru-RU', 1),
+(24, 'Массовая рассылка почты', '', 0, 0, '', 'Рассылка почты', 'com_massmail', 0, '', 1, 'mailSubjectPrefix=\nmailBodySuffix=\n\n', 1),
+(25, 'Редактор меню', '', 0, 0, '', 'Редактор меню', 'com_menus', 0, '', 1, '', 1),
+(27, 'Обмен сообщениями', '', 0, 0, '', 'Обмен сообщениями', 'com_messages', 0, '', 1, '', 1),
+(28, 'Модули', '', 0, 0, '', 'Модули', 'com_modules', 0, '', 1, '', 1),
+(29, 'Плагины', '', 0, 0, '', 'Плагины', 'com_plugins', 0, '', 1, '', 1),
+(30, 'Шаблоны', '', 0, 0, '', 'Шаблоны', 'com_templates', 0, '', 1, '', 1),
+(31, 'Пользователи', '', 0, 0, '', 'Пользователи', 'com_users', 0, '', 1, 'allowUserRegistration=0\nnew_usertype=Registered\nuseractivation=1\nfrontend_userparams=1\n\n', 1),
+(32, 'Кэш', '', 0, 0, '', 'Кэш', 'com_cache', 0, '', 1, '', 1),
+(33, 'Панель управления', '', 0, 0, '', 'Панель управления', 'com_cpanel', 0, '', 1, '', 1),
+(34, 'Attachments', 'option=com_attachments', 0, 0, 'option=com_attachments', 'Attachments', 'com_attachments', 0, 'components/com_attachments/attachments.png', 0, 'who_can_see=anyone\nwho_can_add=author\npublish_default=1\nauto_publish_warning=\nshow_column_titles=0\nshow_description=0\nshow_file_size=1\nshow_downloads=0\nshow_modification_date=0\nmod_date_format=%x %H:%M\nsort_order=filename\nuser_field_1_name=\nuser_field_2_name=\nuser_field_3_name=\nmax_filename_length=0\nattachments_table_style=attachmentsList\nfile_link_open_mode=new_window\nprepend=article_id\nattachments_subdir=attachments\nattachments_titles=\nhide_attachments_for=\nsecure=0\ndownload_mode=inline\nregister_url=index.php?option=com_user&task=register\n\n', 1),
+(35, 'RD Sitemap', 'option=com_rd_sitemap', 0, 0, 'option=com_rd_sitemap', 'RD Sitemap', 'com_rd_sitemap', 0, 'js/ThemeOffice/component.png', 0, 'show_title=0\ndefaulttitle=Карта сайта\nheaderlevel=4\nshow_rd_footer=0\n\n', 1),
+(36, 'VIEW', '', 0, 35, 'option=com_rd_sitemap&section=view&task=view', 'VIEW', 'com_rd_sitemap', 0, 'js/ThemeOffice/component.png', 0, '', 1),
+(37, 'VIEWSET', '', 0, 35, 'option=com_rd_sitemap&section=viewset&task=view', 'VIEWSET', 'com_rd_sitemap', 1, 'js/ThemeOffice/component.png', 0, '', 1),
+(38, 'Community Builder', 'option=com_comprofiler', 0, 0, 'option=com_comprofiler', 'Community Builder', 'com_comprofiler', 0, 'js/ThemeOffice/component.png', 0, '', 1),
+(39, 'User Management', '', 0, 38, 'option=com_comprofiler&task=showusers', 'User Management', 'com_comprofiler', 0, 'js/ThemeOffice/user.png', 0, '', 1),
+(40, 'Tab Management', '', 0, 38, 'option=com_comprofiler&task=showTab', 'Tab Management', 'com_comprofiler', 1, 'js/ThemeOffice/article.png', 0, '', 1),
+(41, 'Field Management', '', 0, 38, 'option=com_comprofiler&task=showField', 'Field Management', 'com_comprofiler', 2, 'js/ThemeOffice/content.png', 0, '', 1),
+(42, 'List Management', '', 0, 38, 'option=com_comprofiler&task=showLists', 'List Management', 'com_comprofiler', 3, 'js/ThemeOffice/static.png', 0, '', 1),
+(43, 'Plugin Management', '', 0, 38, 'option=com_comprofiler&task=showPlugins', 'Plugin Management', 'com_comprofiler', 4, 'js/ThemeOffice/plugin.png', 0, '', 1),
+(44, 'Tools', '', 0, 38, 'option=com_comprofiler&task=tools', 'Tools', 'com_comprofiler', 5, 'js/ThemeOffice/component.png', 0, '', 1),
+(45, 'Configuration', '', 0, 38, 'option=com_comprofiler&task=showconfig', 'Configuration', 'com_comprofiler', 6, 'js/ThemeOffice/config.png', 0, '', 1),
+(46, 'JComments', 'option=com_jcomments', 0, 0, 'option=com_jcomments', 'JComments', 'com_jcomments', 0, 'class:jcomments-logo', 0, 'object_group=com_jcomments\n', 1),
+(47, 'Manage comments', '', 0, 46, 'option=com_jcomments&task=view', 'Manage comments', 'com_jcomments', 0, 'class:jcomments-edit', 0, '', 1),
+(48, 'Settings', '', 0, 46, 'option=com_jcomments&task=settings', 'Settings', 'com_jcomments', 1, 'class:jcomments-settings', 0, '', 1),
+(49, 'Smiles', '', 0, 46, 'option=com_jcomments&task=smiles', 'Smiles', 'com_jcomments', 2, 'class:jcomments-smiles', 0, '', 1),
+(50, 'Import', '', 0, 46, 'option=com_jcomments&task=import', 'Import', 'com_jcomments', 3, 'class:jcomments-import', 0, '', 1),
+(51, 'About', '', 0, 46, 'option=com_jcomments&task=about', 'About', 'com_jcomments', 4, 'class:jcomments-logo', 0, '', 1),
+(52, 'Русский FireBoard', 'option=com_fireboard', 0, 0, 'option=com_fireboard', 'Русский FireBoard', 'com_fireboard', 0, '../administrator/components/com_fireboard/images/fbmenu.png', 0, '', 1),
+(53, 'ccNewsletter', 'option=com_ccnewsletter', 0, 0, 'option=com_ccnewsletter', 'ccNewsletter', 'com_ccnewsletter', 0, 'js/ThemeOffice/component.png', 0, 'fromName=Seminform\nfromEmail=http:\\\\www.seminform.kz\ntestEmailAddress=seminform@bk.ru\nemailperbatch=50\nbatchinterval=60\nscripttimeout=120\nemailvalidation=0\nvmintegration=0\nSyncallusers=0\n\n', 1),
+(54, 'Отправить письмо', '', 0, 53, 'option=com_ccnewsletter&controller=sendNewsletter', 'Отправить письмо', 'com_ccnewsletter', 0, 'js/ThemeOffice/component.png', 0, '', 1),
+(55, 'Подписчики', '', 0, 53, 'option=com_ccnewsletter&controller=subscriber', 'Подписчики', 'com_ccnewsletter', 1, 'js/ThemeOffice/component.png', 0, '', 1),
+(56, 'Письма', '', 0, 53, 'option=com_ccnewsletter&controller=newsletter', 'Письма', 'com_ccnewsletter', 2, 'js/ThemeOffice/component.png', 0, '', 1),
+(57, 'Подтверждение', '', 0, 53, 'option=com_ccnewsletter&controller=acknowledgement', 'Подтверждение', 'com_ccnewsletter', 3, 'js/ThemeOffice/component.png', 0, '', 1),
+(58, 'Импорт/Экспорт', '', 0, 53, 'option=com_ccnewsletter&controller=import', 'Импорт/Экспорт', 'com_ccnewsletter', 4, 'js/ThemeOffice/component.png', 0, '', 1),
+(59, 'Описание', '', 0, 53, 'option=com_ccnewsletter&controller=about', 'Описание', 'com_ccnewsletter', 5, 'js/ThemeOffice/component.png', 0, '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `firstname` varchar(100) DEFAULT NULL,
+  `middlename` varchar(100) DEFAULT NULL,
+  `lastname` varchar(100) DEFAULT NULL,
+  `hits` int(11) NOT NULL DEFAULT '0',
+  `message_last_sent` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `message_number_sent` int(11) NOT NULL DEFAULT '0',
+  `avatar` varchar(255) DEFAULT NULL,
+  `avatarapproved` tinyint(4) NOT NULL DEFAULT '1',
+  `approved` tinyint(4) NOT NULL DEFAULT '1',
+  `confirmed` tinyint(4) NOT NULL DEFAULT '1',
+  `lastupdatedate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `registeripaddr` varchar(50) NOT NULL DEFAULT '',
+  `cbactivation` varchar(50) NOT NULL DEFAULT '',
+  `banned` tinyint(4) NOT NULL DEFAULT '0',
+  `banneddate` datetime DEFAULT NULL,
+  `unbanneddate` datetime DEFAULT NULL,
+  `bannedby` int(11) DEFAULT NULL,
+  `unbannedby` int(11) DEFAULT NULL,
+  `bannedreason` mediumtext,
+  `acceptedterms` tinyint(1) NOT NULL DEFAULT '0',
+  `fbviewtype` varchar(255) NOT NULL DEFAULT '_UE_FB_VIEWTYPE_FLAT',
+  `fbordering` varchar(255) NOT NULL DEFAULT '_UE_FB_ORDERING_OLDEST',
+  `fbsignature` mediumtext,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  KEY `apprconfbanid` (`approved`,`confirmed`,`banned`,`id`),
+  KEY `avatappr_apr_conf_ban_avatar` (`avatarapproved`,`approved`,`confirmed`,`banned`,`avatar`),
+  KEY `lastupdatedate` (`lastupdatedate`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_comprofiler`
+--
+
+INSERT INTO `jos_comprofiler` (`id`, `user_id`, `firstname`, `middlename`, `lastname`, `hits`, `message_last_sent`, `message_number_sent`, `avatar`, `avatarapproved`, `approved`, `confirmed`, `lastupdatedate`, `registeripaddr`, `cbactivation`, `banned`, `banneddate`, `unbanneddate`, `bannedby`, `unbannedby`, `bannedreason`, `acceptedterms`, `fbviewtype`, `fbordering`, `fbsignature`) VALUES
+(62, 62, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 0, NULL, 1, 1, 1, '2010-09-07 15:17:53', '', '', 0, NULL, NULL, NULL, NULL, NULL, 0, '_UE_FB_VIEWTYPE_FLAT', '_UE_FB_ORDERING_OLDEST', NULL),
+(63, 63, NULL, NULL, NULL, 0, '0000-00-00 00:00:00', 0, NULL, 1, 1, 1, '0000-00-00 00:00:00', '127.0.0.1', '', 0, NULL, NULL, NULL, NULL, NULL, 0, '_UE_FB_VIEWTYPE_FLAT', '_UE_FB_ORDERING_OLDEST', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler_fields`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler_fields` (
+  `fieldid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `tablecolumns` text NOT NULL,
+  `table` varchar(50) NOT NULL DEFAULT '#__comprofiler',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `description` mediumtext NOT NULL,
+  `type` varchar(50) NOT NULL DEFAULT '',
+  `maxlength` int(11) DEFAULT NULL,
+  `size` int(11) DEFAULT NULL,
+  `required` tinyint(4) DEFAULT '0',
+  `tabid` int(11) DEFAULT NULL,
+  `ordering` int(11) DEFAULT NULL,
+  `cols` int(11) DEFAULT NULL,
+  `rows` int(11) DEFAULT NULL,
+  `value` varchar(50) DEFAULT NULL,
+  `default` mediumtext,
+  `published` tinyint(1) NOT NULL DEFAULT '1',
+  `registration` tinyint(1) NOT NULL DEFAULT '0',
+  `profile` tinyint(1) NOT NULL DEFAULT '1',
+  `displaytitle` tinyint(1) NOT NULL DEFAULT '1',
+  `readonly` tinyint(1) NOT NULL DEFAULT '0',
+  `searchable` tinyint(1) NOT NULL DEFAULT '0',
+  `calculated` tinyint(1) NOT NULL DEFAULT '0',
+  `sys` tinyint(4) NOT NULL DEFAULT '0',
+  `pluginid` int(11) NOT NULL DEFAULT '0',
+  `params` mediumtext,
+  PRIMARY KEY (`fieldid`),
+  KEY `tabid_pub_prof_order` (`tabid`,`published`,`profile`,`ordering`),
+  KEY `readonly_published_tabid` (`readonly`,`published`,`tabid`),
+  KEY `registration_published_order` (`registration`,`published`,`ordering`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=57 ;
+
+--
+-- Dumping data for table `jos_comprofiler_fields`
+--
+
+INSERT INTO `jos_comprofiler_fields` (`fieldid`, `name`, `tablecolumns`, `table`, `title`, `description`, `type`, `maxlength`, `size`, `required`, `tabid`, `ordering`, `cols`, `rows`, `value`, `default`, `published`, `registration`, `profile`, `displaytitle`, `readonly`, `searchable`, `calculated`, `sys`, `pluginid`, `params`) VALUES
+(41, 'name', 'name', '#__users', '_UE_NAME', '_UE_REGWARN_NAME', 'predefined', NULL, NULL, 1, 11, -51, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 0, 1, 1, 1, 1, NULL),
+(26, 'onlinestatus', '', '#__comprofiler', '_UE_ONLINESTATUS', '', 'status', NULL, NULL, 0, 21, -21, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 0, 0, 1, 1, 1, NULL),
+(27, 'lastvisitDate', 'lastvisitDate', '#__users', '_UE_LASTONLINE', '', 'datetime', NULL, NULL, 0, 21, -19, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 1, 0, 1, 1, 1, 'field_display_by=2'),
+(28, 'registerDate', 'registerDate', '#__users', '_UE_MEMBERSINCE', '', 'datetime', NULL, NULL, 0, 21, -20, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 1, 0, 1, 1, 1, 'field_display_by=2'),
+(29, 'avatar', 'avatar,avatarapproved', '#__comprofiler', '_UE_IMAGE', '', 'image', NULL, NULL, 0, 20, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, 1, 1, NULL),
+(42, 'username', 'username', '#__users', '_UE_UNAME', '_UE_VALID_UNAME', 'predefined', NULL, NULL, 1, 11, -46, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 0, 1, 1, 1, 1, NULL),
+(45, 'formatname', '', '#__comprofiler', '_UE_FORMATNAME', '', 'formatname', NULL, NULL, 0, 11, -52, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 1, 0, 1, 1, 1, NULL),
+(46, 'firstname', 'firstname', '#__comprofiler', '_UE_YOUR_FNAME', '_UE_REGWARN_FNAME', 'predefined', NULL, NULL, 1, 11, -50, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 0, 0, 1, 1, 1, NULL),
+(47, 'middlename', 'middlename', '#__comprofiler', '_UE_YOUR_MNAME', '_UE_REGWARN_MNAME', 'predefined', NULL, NULL, 0, 11, -49, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 0, 0, 1, 1, 1, NULL),
+(48, 'lastname', 'lastname', '#__comprofiler', '_UE_YOUR_LNAME', '_UE_REGWARN_LNAME', 'predefined', NULL, NULL, 1, 11, -48, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 0, 0, 1, 1, 1, NULL),
+(49, 'lastupdatedate', 'lastupdatedate', '#__comprofiler', '_UE_LASTUPDATEDON', '', 'datetime', NULL, NULL, 0, 21, -18, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 1, 0, 1, 1, 1, 'field_display_by=2'),
+(50, 'email', 'email', '#__users', '_UE_EMAIL', '_UE_REGWARN_MAIL', 'primaryemailaddress', NULL, NULL, 1, 11, -47, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 0, 0, 1, 1, 1, NULL),
+(25, 'hits', 'hits', '#__comprofiler', '_UE_HITS', '_UE_HITS_DESC', 'counter', NULL, NULL, 0, 21, -22, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 1, 0, 1, 1, 1, NULL),
+(51, 'password', 'password', '#__users', '_UE_PASS', '_UE_VALID_PASS', 'password', 50, NULL, 1, 11, -45, NULL, NULL, NULL, NULL, 1, 1, 0, 1, 0, 0, 1, 1, 1, NULL),
+(52, 'params', 'params', '#__users', '_UE_USERPARAMS', '', 'userparams', NULL, NULL, 0, 11, -30, NULL, NULL, NULL, NULL, 1, 0, 0, 1, 0, 0, 1, 1, 1, NULL),
+(24, 'connections', '', '#__comprofiler', '_UE_CONNECTION', '', 'connections', NULL, NULL, 0, 21, -17, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 1, 0, 1, 1, 1, NULL),
+(23, 'forumrank', '', '#__comprofiler', '_UE_FORUM_FORUMRANKING', '', 'forumstats', NULL, NULL, 0, 21, -16, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 1, 0, 1, 1, 4, NULL),
+(22, 'forumposts', '', '#__comprofiler', '_UE_FORUM_TOTALPOSTS', '', 'forumstats', NULL, NULL, 0, 21, -15, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 1, 0, 1, 1, 4, NULL),
+(21, 'forumkarma', '', '#__comprofiler', '_UE_FORUM_KARMA', '', 'forumstats', NULL, NULL, 0, 21, -14, NULL, NULL, NULL, NULL, 1, 0, 1, 1, 1, 0, 1, 1, 4, NULL),
+(20, 'forumsignature', '', '#__comprofiler', '_UE_FB_SIGNATURE', '', 'forumsettings', NULL, NULL, 0, 13, 3, 60, 5, NULL, NULL, 1, 0, 0, 1, 0, 0, 0, 1, 4, NULL),
+(19, 'forumview', '', '#__comprofiler', '_UE_FB_VIEWTYPE_TITLE', '', 'forumsettings', NULL, NULL, 1, 13, 2, NULL, NULL, NULL, 'flat', 1, 0, 0, 1, 0, 0, 0, 1, 4, NULL),
+(18, 'forumorder', '', '#__comprofiler', '_UE_FB_ORDERING_TITLE', '', 'forumsettings', NULL, NULL, 1, 13, 1, NULL, NULL, NULL, '0', 1, 0, 0, 1, 0, 0, 0, 1, 4, NULL),
+(54, 'fbviewtype', '', '#__comprofiler', '_UE_FB_VIEWTYPE_TITLE', '', 'select', NULL, NULL, 0, 25, 1, NULL, NULL, NULL, NULL, 1, 0, 0, 1, 0, 0, 0, 0, 0, NULL),
+(55, 'fbordering', '', '#__comprofiler', '_UE_FB_ORDERING_TITLE', '', 'select', NULL, NULL, 0, 25, 2, NULL, NULL, NULL, NULL, 1, 0, 0, 1, 0, 0, 0, 0, 0, NULL),
+(56, 'fbsignature', '', '#__comprofiler', '_UE_FB_SIGNATURE', '', 'textarea', 300, NULL, 0, 25, 3, 60, 5, NULL, NULL, 1, 0, 0, 1, 0, 0, 0, 0, 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler_field_values`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler_field_values` (
+  `fieldvalueid` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldid` int(11) NOT NULL DEFAULT '0',
+  `fieldtitle` varchar(255) NOT NULL DEFAULT '',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `sys` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fieldvalueid`),
+  KEY `fieldid_ordering` (`fieldid`,`ordering`),
+  KEY `fieldtitle_id` (`fieldtitle`,`fieldid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+
+--
+-- Dumping data for table `jos_comprofiler_field_values`
+--
+
+INSERT INTO `jos_comprofiler_field_values` (`fieldvalueid`, `fieldid`, `fieldtitle`, `ordering`, `sys`) VALUES
+(16, 54, '_UE_FB_VIEWTYPE_FLAT', 1, 0),
+(17, 54, '_UE_FB_VIEWTYPE_THREADED', 2, 0),
+(18, 55, '_UE_FB_ORDERING_OLDEST', 1, 0),
+(19, 55, '_UE_FB_ORDERING_LATEST', 2, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler_lists`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler_lists` (
+  `listid` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `description` mediumtext,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `default` tinyint(1) NOT NULL DEFAULT '0',
+  `usergroupids` varchar(255) DEFAULT NULL,
+  `useraccessgroupid` int(9) NOT NULL DEFAULT '18',
+  `sortfields` varchar(255) DEFAULT NULL,
+  `filterfields` mediumtext,
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `col1title` varchar(255) DEFAULT NULL,
+  `col1enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `col1fields` mediumtext,
+  `col2title` varchar(255) DEFAULT NULL,
+  `col2enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `col1captions` tinyint(1) NOT NULL DEFAULT '0',
+  `col2fields` mediumtext,
+  `col2captions` tinyint(1) NOT NULL DEFAULT '0',
+  `col3title` varchar(255) DEFAULT NULL,
+  `col3enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `col3fields` mediumtext,
+  `col3captions` tinyint(1) NOT NULL DEFAULT '0',
+  `col4title` varchar(255) DEFAULT NULL,
+  `col4enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `col4fields` mediumtext,
+  `col4captions` tinyint(1) NOT NULL DEFAULT '0',
+  `params` mediumtext,
+  PRIMARY KEY (`listid`),
+  KEY `pub_ordering` (`published`,`ordering`),
+  KEY `default_published` (`default`,`published`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `jos_comprofiler_lists`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler_members`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler_members` (
+  `referenceid` int(11) NOT NULL DEFAULT '0',
+  `memberid` int(11) NOT NULL DEFAULT '0',
+  `accepted` tinyint(1) NOT NULL DEFAULT '1',
+  `pending` tinyint(1) NOT NULL DEFAULT '0',
+  `membersince` date NOT NULL DEFAULT '0000-00-00',
+  `reason` mediumtext,
+  `description` varchar(255) DEFAULT NULL,
+  `type` mediumtext,
+  PRIMARY KEY (`referenceid`,`memberid`),
+  KEY `pamr` (`pending`,`accepted`,`memberid`,`referenceid`),
+  KEY `aprm` (`accepted`,`pending`,`referenceid`,`memberid`),
+  KEY `membrefid` (`memberid`,`referenceid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_comprofiler_members`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler_plugin`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler_plugin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `element` varchar(100) NOT NULL DEFAULT '',
+  `type` varchar(100) DEFAULT '',
+  `folder` varchar(100) DEFAULT '',
+  `backend_menu` varchar(255) NOT NULL DEFAULT '',
+  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `published` tinyint(3) NOT NULL DEFAULT '0',
+  `iscore` tinyint(3) NOT NULL DEFAULT '0',
+  `client_id` tinyint(3) NOT NULL DEFAULT '0',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `params` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_folder` (`published`,`client_id`,`access`,`folder`),
+  KEY `type_pub_order` (`type`,`published`,`ordering`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=503 ;
+
+--
+-- Dumping data for table `jos_comprofiler_plugin`
+--
+
+INSERT INTO `jos_comprofiler_plugin` (`id`, `name`, `element`, `type`, `folder`, `backend_menu`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES
+(1, 'CB Core', 'cb.core', 'user', 'plug_cbcore', '', 0, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(2, 'CB Connections', 'cb.connections', 'user', 'plug_cbconnections', '', 0, 4, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(3, 'Content Author', 'cb.authortab', 'user', 'plug_cbmamboauthortab', '', 0, 5, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(4, 'Forum integration', 'cb.simpleboardtab', 'user', 'plug_cbsimpleboardtab', '', 0, 6, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(5, 'Mamblog Blog', 'cb.mamblogtab', 'user', 'plug_cbmamblogtab', '', 0, 7, 0, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(6, 'YaNC Newsletters', 'yanc', 'user', 'plug_yancintegration', '', 0, 8, 0, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(7, 'Default', 'default', 'templates', 'default', '', 0, 1, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(8, 'WinClassic', 'winclassic', 'templates', 'winclassic', '', 0, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(9, 'WebFX', 'webfx', 'templates', 'webfx', '', 0, 3, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(10, 'OSX', 'osx', 'templates', 'osx', '', 0, 4, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(11, 'Luna', 'luna', 'templates', 'luna', '', 0, 5, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(12, 'Dark', 'dark', 'templates', 'dark', '', 0, 6, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(13, 'Default language (English)', 'default_language', 'language', 'default_language', '', 0, -1, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(14, 'CB Menu', 'cb.menu', 'user', 'plug_cbmenu', '', 0, 3, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(15, 'Private Message System', 'pms.mypmspro', 'user', 'plug_pms_mypmspro', '', 0, 9, 0, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(500, 'CB Captcha', 'cb.captcha', 'user', 'plug_cbcaptcha', '', 0, 10, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(501, 'JComments Tab', 'jcomments.plugin', 'user', 'plug_jcommentstab', '', 0, 11, 1, 0, 0, 0, '0000-00-00 00:00:00', 'object_group=com_content\ncount=10\nlength=20\nshowsmiles=0\nlabel4more=More...'),
+(502, 'ccNewsletter', 'ccnewsletter', 'user', 'plug_ccnewsletter', '', 0, 1, 1, 0, 0, 0, '0000-00-00 00:00:00', 'sunbscribetxt=Wish to join our newsletter\nunsunbscribetxt=Wish to unsubscribe our newsletter');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler_sessions`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler_sessions` (
+  `username` varchar(50) NOT NULL DEFAULT '',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0',
+  `ui` tinyint(4) NOT NULL DEFAULT '0',
+  `incoming_ip` varchar(39) NOT NULL DEFAULT '',
+  `client_ip` varchar(39) NOT NULL DEFAULT '',
+  `session_id` varchar(33) NOT NULL DEFAULT '',
+  `session_data` mediumtext NOT NULL,
+  `expiry_time` int(14) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`session_id`),
+  KEY `expiry_time` (`expiry_time`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_comprofiler_sessions`
+--
+
+INSERT INTO `jos_comprofiler_sessions` (`username`, `userid`, `ui`, `incoming_ip`, `client_ip`, `session_id`, `session_data`, `expiry_time`) VALUES
+('', 0, 1, '127.0.0.1', '127.0.0.1', 'g16uMbytwTouKFitzuXXK0ieX3SBIF8h', 'a:3:{s:17:"cbsessions.verify";s:32:"fJ5tdwQCshKTKhpEPYbmduvUHNKndENb";s:15:"cbsession.agent";s:124:"Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.2.8) Gecko/20100722 MRA 5.7 (build 03639) Firefox/3.6.8 WebMoney Advisor";s:15:"cb.plug.captcha";a:1:{s:15:"cbcaptchaparams";a:10:{s:12:"captchaWidth";s:2:"95";s:13:"captchaHeight";s:2:"30";s:15:"captchaNumChars";s:1:"5";s:14:"captchaCharSet";s:25:"abcdefhijklmnopqrstuvwxyz";s:11:"captchaFont";s:1:"0";s:20:"captchaBackgroundRGB";s:11:"255,255,255";s:14:"captchaTextRGB";s:9:"20,40,100";s:15:"captchaNoiseRGB";s:11:"100,120,180";s:19:"captchaSecurityMode";i:0;s:11:"captchaCode";s:5:"ruvlr";}}}', 1283899331),
+('', 0, 1, '127.0.0.1', '127.0.0.1', 'nanY0VMBxEfwmlWtHAzSgVuwfUIssghs', 'a:3:{s:17:"cbsessions.verify";s:32:"WoGcdHGUYssPFfFAC2hfUKlD8Lwlqkyw";s:15:"cbsession.agent";s:124:"Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.2.8) Gecko/20100722 MRA 5.7 (build 03639) Firefox/3.6.8 WebMoney Advisor";s:15:"cb.plug.captcha";a:1:{s:15:"cbcaptchaparams";a:10:{s:12:"captchaWidth";s:2:"95";s:13:"captchaHeight";s:2:"30";s:15:"captchaNumChars";s:1:"5";s:14:"captchaCharSet";s:25:"abcdefhijklmnopqrstuvwxyz";s:11:"captchaFont";s:1:"0";s:20:"captchaBackgroundRGB";s:11:"255,255,255";s:14:"captchaTextRGB";s:9:"20,40,100";s:15:"captchaNoiseRGB";s:11:"100,120,180";s:19:"captchaSecurityMode";i:0;s:11:"captchaCode";s:5:"qzjur";}}}', 1283899378);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler_tabs`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler_tabs` (
+  `tabid` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `description` text,
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `ordering_register` int(11) NOT NULL DEFAULT '10',
+  `width` varchar(10) NOT NULL DEFAULT '.5',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `pluginclass` varchar(255) DEFAULT NULL,
+  `pluginid` int(11) DEFAULT NULL,
+  `fields` tinyint(1) NOT NULL DEFAULT '1',
+  `params` mediumtext,
+  `sys` tinyint(4) NOT NULL DEFAULT '0',
+  `displaytype` varchar(255) NOT NULL DEFAULT '',
+  `position` varchar(255) NOT NULL DEFAULT '',
+  `useraccessgroupid` int(9) NOT NULL DEFAULT '-2',
+  PRIMARY KEY (`tabid`),
+  KEY `enabled_position_ordering` (`enabled`,`position`,`ordering`),
+  KEY `orderreg_enabled_pos_order` (`enabled`,`ordering_register`,`position`,`ordering`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+
+--
+-- Dumping data for table `jos_comprofiler_tabs`
+--
+
+INSERT INTO `jos_comprofiler_tabs` (`tabid`, `title`, `description`, `ordering`, `ordering_register`, `width`, `enabled`, `pluginclass`, `pluginid`, `fields`, `params`, `sys`, `displaytype`, `position`, `useraccessgroupid`) VALUES
+(11, '_UE_CONTACT_INFO_HEADER', '', -4, 10, '1', 1, 'getContactTab', 1, 1, NULL, 2, 'tab', 'cb_tabmain', -2),
+(12, '_UE_AUTHORTAB', '', -3, 10, '1', 0, 'getAuthorTab', 3, 0, NULL, 1, 'tab', 'cb_tabmain', -2),
+(13, '_UE_FORUMTAB', '', -2, 10, '1', 1, 'getForumTab', 4, 1, NULL, 1, 'tab', 'cb_tabmain', -2),
+(14, '_UE_BLOGTAB', '', -1, 10, '1', 0, 'getBlogTab', 5, 0, NULL, 1, 'tab', 'cb_tabmain', -2),
+(15, '_UE_CONNECTION', '', 99, 10, '1', 0, 'getConnectionTab', 2, 0, NULL, 1, 'tab', 'cb_tabmain', -2),
+(16, '_UE_NEWSLETTER_HEADER', '_UE_NEWSLETTER_INTRODCUTION', 99, 10, '1', 1, 'getNewslettersTab', 502, 0, NULL, 1, 'tab', 'cb_tabmain', -2),
+(17, '_UE_MENU', '', -10, 10, '1', 1, 'getMenuTab', 14, 0, NULL, 1, 'html', 'cb_head', -2),
+(18, '_UE_CONNECTIONPATHS', '', -9, 10, '1', 1, 'getConnectionPathsTab', 2, 0, NULL, 1, 'html', 'cb_head', -2),
+(19, '_UE_PROFILE_PAGE_TITLE', '', -8, 10, '1', 1, 'getPageTitleTab', 1, 0, NULL, 1, 'html', 'cb_head', -2),
+(20, '_UE_PORTRAIT', '', -7, 10, '1', 1, 'getPortraitTab', 1, 1, NULL, 1, 'html', 'cb_middle', -2),
+(21, '_UE_USER_STATUS', '', -6, 10, '.5', 1, 'getStatusTab', 14, 1, NULL, 1, 'html', 'cb_right', -2),
+(22, '_UE_PMSTAB', '', -5, 10, '.5', 0, 'getmypmsproTab', 15, 0, NULL, 1, 'html', 'cb_right', -2),
+(23, 'CB Captcha', 'This CB Captcha Tab placeholder is used to move captcha image placement in relation to other CB tabs that contain registration fields.', 100, 10, '.5', 1, 'getcaptchaTab', 500, 0, NULL, 0, '', '', -2),
+(24, 'My latest comments', '', 101, 10, '.5', 1, 'JCommentsTab', 501, 0, NULL, 0, 'tab', 'cb_tabmain', -2),
+(25, '_UE_FB_TABTITLE', '_UE_FB_TABDESC', 0, 10, '.5', 1, NULL, NULL, 1, NULL, 0, '', '', -2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler_userreports`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler_userreports` (
+  `reportid` int(11) NOT NULL AUTO_INCREMENT,
+  `reporteduser` int(11) NOT NULL DEFAULT '0',
+  `reportedbyuser` int(11) NOT NULL DEFAULT '0',
+  `reportedondate` date NOT NULL DEFAULT '0000-00-00',
+  `reportexplaination` text NOT NULL,
+  `reportedstatus` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`reportid`),
+  KEY `status_user_date` (`reportedstatus`,`reporteduser`,`reportedondate`),
+  KEY `reportedbyuser_ondate` (`reportedbyuser`,`reportedondate`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `jos_comprofiler_userreports`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_comprofiler_views`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_comprofiler_views` (
+  `viewer_id` int(11) NOT NULL DEFAULT '0',
+  `profile_id` int(11) NOT NULL DEFAULT '0',
+  `lastip` varchar(50) NOT NULL DEFAULT '',
+  `lastview` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `viewscount` int(11) NOT NULL DEFAULT '0',
+  `vote` tinyint(3) DEFAULT NULL,
+  `lastvote` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`viewer_id`,`profile_id`,`lastip`),
+  KEY `lastview` (`lastview`),
+  KEY `profile_id_lastview` (`profile_id`,`lastview`,`viewer_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_comprofiler_views`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_contact_details`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_contact_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `con_position` varchar(255) DEFAULT NULL,
+  `address` text,
+  `suburb` varchar(100) DEFAULT NULL,
+  `state` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `postcode` varchar(100) DEFAULT NULL,
+  `telephone` varchar(255) DEFAULT NULL,
+  `fax` varchar(255) DEFAULT NULL,
+  `misc` mediumtext,
+  `image` varchar(255) DEFAULT NULL,
+  `imagepos` varchar(20) DEFAULT NULL,
+  `email_to` varchar(255) DEFAULT NULL,
+  `default_con` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `published` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `params` text NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `catid` int(11) NOT NULL DEFAULT '0',
+  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `mobile` varchar(255) NOT NULL DEFAULT '',
+  `webpage` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `catid` (`catid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `jos_contact_details`
+--
+
+INSERT INTO `jos_contact_details` (`id`, `name`, `alias`, `con_position`, `address`, `suburb`, `state`, `country`, `postcode`, `telephone`, `fax`, `misc`, `image`, `imagepos`, `email_to`, `default_con`, `published`, `checked_out`, `checked_out_time`, `ordering`, `params`, `user_id`, `catid`, `access`, `mobile`, `webpage`) VALUES
+(1, 'Администрация', '2010-09-06-16-38-15', '', 'Центральный офис: ул.Аймаутова,50\r\nМагазин: ул. Боуржана Момыш-улы,10\r\n', 'Семей', 'Восточно-Казахстанская область', 'Казахстан', '', 'Центральный офис: 8(7222)561889, 8(7222)562223, 8(7222)561880                Магазин: 8(7222)522362,8(7222)522200', '', 'Здесь вы можете написать письмо Администрации сайта...', '', NULL, 'seminform@bk.ru', 0, 1, 0, '0000-00-00 00:00:00', 1, 'show_name=1\nshow_position=0\nshow_email=0\nshow_street_address=1\nshow_suburb=1\nshow_state=1\nshow_postcode=0\nshow_country=1\nshow_telephone=1\nshow_mobile=0\nshow_fax=0\nshow_webpage=0\nshow_misc=1\nshow_image=0\nallow_vcard=0\ncontact_icons=0\nicon_address=\nicon_email=\nicon_telephone=\nicon_mobile=\nicon_fax=\nicon_misc=\nshow_email_form=1\nemail_description=\nshow_email_copy=1\nbanned_email=\nbanned_subject=\nbanned_text=', 0, 27, 0, '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_content`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_content` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `title_alias` varchar(255) NOT NULL DEFAULT '',
+  `introtext` mediumtext NOT NULL,
+  `fulltext` mediumtext NOT NULL,
+  `state` tinyint(3) NOT NULL DEFAULT '0',
+  `sectionid` int(11) unsigned NOT NULL DEFAULT '0',
+  `mask` int(11) unsigned NOT NULL DEFAULT '0',
+  `catid` int(11) unsigned NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` int(11) unsigned NOT NULL DEFAULT '0',
+  `created_by_alias` varchar(255) NOT NULL DEFAULT '',
+  `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified_by` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `images` text NOT NULL,
+  `urls` text NOT NULL,
+  `attribs` text NOT NULL,
+  `version` int(11) unsigned NOT NULL DEFAULT '1',
+  `parentid` int(11) unsigned NOT NULL DEFAULT '0',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `metakey` text NOT NULL,
+  `metadesc` text NOT NULL,
+  `access` int(11) unsigned NOT NULL DEFAULT '0',
+  `hits` int(11) unsigned NOT NULL DEFAULT '0',
+  `metadata` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_section` (`sectionid`),
+  KEY `idx_access` (`access`),
+  KEY `idx_checkout` (`checked_out`),
+  KEY `idx_state` (`state`),
+  KEY `idx_catid` (`catid`),
+  KEY `idx_createdby` (`created_by`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+
+--
+-- Dumping data for table `jos_content`
+--
+
+INSERT INTO `jos_content` (`id`, `title`, `alias`, `title_alias`, `introtext`, `fulltext`, `state`, `sectionid`, `mask`, `catid`, `created`, `created_by`, `created_by_alias`, `modified`, `modified_by`, `checked_out`, `checked_out_time`, `publish_up`, `publish_down`, `images`, `urls`, `attribs`, `version`, `parentid`, `ordering`, `metakey`, `metadesc`, `access`, `hits`, `metadata`) VALUES
+(2, 'BENQ G922HDL', 'benq-g922hdl', '', '<p>18,5 Benq TFT G922HDL </p><p><img src="images/stories/benq_g922hdl_1.jpg" border="0" width="395" height="315" /> </p><p>&nbsp;</p>', '<img src="images/stories/benq_g922hdl_2.jpg" border="0" width="143" height="347" /><p>    Название продукта:     BenQ G922HDL<br />   <br />       Категория:      Мониторы<br />   <br />       Марка:       BenQ<br />  </p><p>      Тип Экрана:      LCD</p><p>      Разрешение:      1366x768<br /><br />      Яркость:      250<br /><br />      Контрастность:     1000:1</p><p>      Время Отклика:     5 ms</p><p>      Глубина Цвета:     16.7</p><p>      Видео Вход:     D-Sub, DVI, HDMI, VGA</p>      Ручные настройки:     Brightness, Contrast, Tilt', 1, 1, 0, 2, '2010-09-06 10:41:42', 62, '', '2010-09-07 17:46:42', 62, 0, '0000-00-00 00:00:00', '2010-09-06 10:41:42', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_vote=0\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nlanguage=\nkeyref=\nreadmore=', 4, 0, 3, '', '', 0, 4, 'robots=\nauthor='),
+(3, 'LG 1943S', 'lg-1943s', '', '<p> LG 19" Flatron W1943S-PF</p><p> <img src="images/stories/hgtr.JPG" border="0" width="335" height="350" /></p>', '<p>&nbsp;</p><p> <img src="images/stories/gg.JPG" border="0" width="349" height="268" /></p><p>&nbsp;</p><p>Тип    ЖК<br />      <br />Размер    18.5"<br />      <br />Максимальное разрешение    1366x768<br />      <br />Тип ЖК-матрицы    TFT TN<br />      <br />Широкоформатный монитор    да<br />      <br />Серия    игровой<br />      <br />Развертка LG 19" Flatron W1943S-PF<br />Частота развертки    горизонтальная: 30-83 кГц; вертикальная: 56-75 Гц<br />      <br />Функции LG 19" Flatron W1943S-PF<br />Функциональность    меню на русском языке<br />      <br />Дополнительно LG 19" Flatron W1943S-PF<br />Стандарты    Plug&Play: DDC/CI; энергосбережения: EPA Energy Star<br />      <br />Размеры, вес    449x361x183 мм, 3.30 кг<br />      <br />Особенности    режим 4:3 in Wide позволяет отображать изображение с соотношением сторон 4:3 на широкоформатном экране без искажения пропорций<br />      <br />Экран LG 19" Flatron W1943S-PF<br />Яркость    300 кд/м2<br />      <br />Динамическая контрастность    30000:1<br />      <br />Время отклика    5 мс<br />      <br />Область обзора    по горизонтали: 170°; по вертикали: 160°<br />      <br />Максимальное количество цветов     16.7 млн.<br />      <br />Интерфейсы LG 19" Flatron W1943S-PF<br />Входы    VGA (D-Sub)<br />      <br />Питание LG 19" Flatron W1943S-PF<br />Блок питания    встроенный<br />      <br />Потребляемая мощность    при работе: 21 Вт, в режиме ожидания: 1 Вт, в спящем режиме: 1 Вт</p>', 1, 1, 0, 2, '2010-09-06 11:11:57', 62, '', '2010-09-07 17:46:18', 62, 0, '0000-00-00 00:00:00', '2010-09-06 11:11:57', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_vote=0\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nlanguage=\nkeyref=\nreadmore=', 4, 0, 2, '', '', 0, 1, 'robots=\nauthor='),
+(4, 'Колонки Microlab-528 II Subwoofer (2.1)', '-microlab-528-ii-subwoofer-21', '', '<p>Колонки 2.1 Microlab 528</p><p><img src="images/stories/10f95b3c5e5ba13acbd988116766076c.jpg" border="0" width="356" height="250" /></p><p>&nbsp;</p>', '<p><br />Компактная акустическая система 2.1 в деревянном корпусе современного дизайна. Специально разработанные динамические головки оптимизированы для чистого и точного звучания.<br />Технические особенности<br /><br />    *  4" динамик сабвуфера аэродинамической формы (корзина динамика оптимизирована для снижения возможных шумов)<br />    * Кристальный и чистый звук динамиков сателлитов (тип V)<br />    * Магнитное экранирование<br />    * Идеально работает как со звуковыми картами персонального компьютера, так и с портативными аудио плеерами, mp3 плеерами, ноутбуками и любыми источниками звука<br /><br />Характеристики<br /><br />    * Выходная мощность: 32 Вт (2 х 9 Вт + 14 Вт RMS)<br />    * Диапазон частот: 55 - 20 000 Гц<br />    * Материал корпуса: дерево<br />    * Разделение каналов: &gt; 40 дБ<br />    * Размер сателлитов: 2.75" + 1.5"<br />    * Размер сабвуфера: 4"<br />    * Защита магнитное экранирование динамиков<br />    * Вес: 4.6 кг</p>', 1, 1, 0, 6, '2010-09-06 11:19:30', 62, '', '2010-09-07 17:48:10', 62, 0, '0000-00-00 00:00:00', '2010-09-06 11:19:30', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_vote=0\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nlanguage=\nkeyref=\nreadmore=', 3, 0, 2, '', '', 0, 0, 'robots=\nauthor='),
+(5, 'монитор LG W1946SN', '-lg-w1946sn', '', '<p> LG W1946SN</p><p><img src="images/stories/157260_img2.jpg" border="0" /></p>', '<p>&nbsp;</p><p>   ХАРАКТЕРИСТИКИ Монитор LG W1946SN-BF Flatron 18.5" Black      <br />Размер экрана     18.5"<br />Широкоформатный     да<br />Матрица<br />Тип ЖК-матрицы     TN<br />Время отклика     5 мс<br />Максимальное разрешение     1366 х 768<br />Яркость     250 кд/м2<br />Контрастность динамическая     30000:1<br />Угол обзора     176° по горизонтали, 170° по вертикали<br />Покрытие экрана     матовое<br />Интерфейсы<br />VGA (D-Sub)     есть<br />Питание<br />Блок питания     встроенный<br />Потребляемая мощность при работе     22 Вт<br />Потребляемая мощность в режиме ожидания     0.5 Вт<br />Дополнительно<br />Регулировка положения экрана     наклон -5° ~ 15°<br />Габаритные размеры     44,26 x 35,62 x 16,99 см - с подставкой; 44,26 x 26,67 x 6,04 см - без подставки<br />Вес     3 кг<br /><br />    ОПИСАНИЕ Монитор LG W1946SN-BF Flatron 18.5" Black     <br />Профили коррекции изображения Режим динамической контрастности, режим динамической цветокоррекции<br />Подсветка LCD-матрицы CCFL<br />Точка LCD-матрицы 0.3 x 0.3 мм<br />Формат LCD-матрицы 16:9<br />Крепление монитора к стене VESA 100 x 100 мм; кронштейн для крепления приобретается отдельно<br />Безопасность Слот для Kensington lock<br />Рабочая температура 10 ~ 35°C</p>', 1, 1, 0, 2, '2010-09-06 11:32:23', 62, '', '2010-09-07 17:45:58', 62, 0, '0000-00-00 00:00:00', '2010-09-06 11:32:23', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_vote=0\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nlanguage=\nkeyref=\nreadmore=', 3, 0, 1, '', '', 0, 9, 'robots=\nauthor='),
+(6, 'Колонки Microlab-666 Subwoofer (2.1)', '-microlab-666-subwoofer-21', '', '<p>Колонки  Microlab-666</p><p><img src="images/stories/image.jpg" border="0" /></p>', '<p>&nbsp;</p><p>Ссылка на описание на сайте производителя      microlab.com<br />Чувствительность     сателитты: 50 мВ, сабвуфер: 360 мВ<br />Количество сателлитов     2<br />Сабвуфер     1<br />Частотный диапазон     55 - 20 000 Гц<br />Соотношение сигнал/шум     &gt; 65 дБ<br />Мощность     32 Вт RMS<br />Материал корпуса     сателлиты: пластик, сабвуфер: дерево<br />Дополнительные параметры     магнитное экранирование фронтальных колонок/саттелитов:есть<br />магнитное экранирование сабвуфера:есть<br />количество полос фронтальных колонок:1<br />диаметр динамиков фронтальных колонок:1х63.5 мм<br />диаметр динамиков сабвуфера:1х101.6 мм<br />Габаритные размеры     размеры фронтальных колонок:84х125х96 мм<br />размеры сабвуфера:150х220х265 мм<br />Вес     4.6 кг </p>', 1, 1, 0, 6, '2010-09-06 11:38:15', 62, '', '2010-09-07 17:47:44', 62, 0, '0000-00-00 00:00:00', '2010-09-06 11:38:15', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_vote=0\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nlanguage=\nkeyref=\nreadmore=', 3, 0, 1, '', '', 0, 14, 'robots=\nauthor='),
+(7, 'наши услуги', '2010-09-06-13-50-33', '', '<br /><ul><li><strong><font color="#000000">Компьютерная техника (компьютеры, ноутбуки, комплектующие)</font></strong></li><li><strong><font color="#000000">Программное обеспечение (Microsoft, Касперский и т.д.)</font></strong></li><li><strong><font color="#000000">Кабельные системы (сетевое оборудование и др.)</font></strong></li><li><strong><font color="#000000">Офисная техника (принтеры, МФУ, АТС, телефоны, факсы и др.)</font></strong></li><li><strong><font color="#000000">Расходные материалы (картриджи для принтеров, бумага, тонер и др.)</font></strong></li><li><strong><font color="#000000">Заправка картриджей</font></strong></li><li><strong><font color="#000000">Копировальная техника</font></strong></li><li><strong><font color="#000000">Ремонт и обслуживание компьютерной, офисной и периферийной техники, кассовых аппаратов</font></strong></li><li><strong><font color="#000000">Модернизация компьютерной техники (замена старой техники на новую)<br /></font></strong></li></ul>', '', 1, 7, 0, 26, '2010-09-06 13:49:38', 62, '', '2010-09-07 17:06:31', 62, 0, '0000-00-00 00:00:00', '2010-09-06 13:49:38', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=0\nshow_vote=0\nshow_author=0\nshow_create_date=0\nshow_modify_date=0\nshow_pdf_icon=0\nshow_print_icon=0\nshow_email_icon=0\nlanguage=\nkeyref=\nreadmore=', 9, 0, 3, '', '', 0, 34, 'robots=\nauthor='),
+(9, 'Информация', '2010-09-07-16-16-34', '', 'Рассрочка, вакансии, скидки ...', '', 1, 8, 0, 28, '2010-09-07 16:15:59', 62, '', '2010-09-07 17:00:00', 62, 0, '0000-00-00 00:00:00', '2010-09-07 16:15:59', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_vote=0\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nlanguage=\nkeyref=\nreadmore=', 4, 0, 1, '', '', 0, 19, 'robots=\nauthor='),
+(10, 'О нас', '2010-09-07-17-03-42', '', 'История', '', 1, 9, 0, 29, '2010-09-07 17:02:16', 62, '', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '2010-09-07 17:02:16', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=0\nshow_vote=0\nshow_author=0\nshow_create_date=0\nshow_modify_date=0\nshow_pdf_icon=0\nshow_print_icon=0\nshow_email_icon=0\nlanguage=\nkeyref=\nreadmore=', 1, 0, 1, '', '', 0, 5, 'robots=\nauthor='),
+(11, 'рассрочка', '2010-09-07-17-56-28', '', '<p><strong>Компьютеры, ноутбуки, офисная техника в рассрочку.</strong></p><p><strong>Условия:</strong></p><p><strong>1. Первоначальный взнос не менее 50% от стоимости товара</strong></p><p><strong>2. Оставшаяся сумма распределяется от 1 до 6 месяцев <br /></strong></p><p><strong>3.  От вас требуется: Удостоверение, РНН, домовая книга (нового образца), СИК (не обязательно)  </strong></p><p><strong>4. Без процентов и НДС<br /></strong></p>', '', 1, 7, 0, 26, '2010-09-07 17:49:34', 62, '', '2010-09-07 18:00:54', 62, 0, '0000-00-00 00:00:00', '2010-09-07 17:49:34', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_vote=0\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nlanguage=\nkeyref=\nreadmore=', 2, 0, 2, '', '', 0, 0, 'robots=\nauthor='),
+(12, 'наши адреса', '2010-09-07-18-06-46', '', '<p><strong>Центральный офис:</strong></p><p><strong>ул. Аймаутова,50</strong></p><p><strong>тел. 8(7222)561889, 8(7222)562223, 8(7222)561880</strong></p><p><strong> Магазин:</strong></p><p><strong>ул. Боуржана Момыш-улы,10</strong></p><p><strong>тел. 8(7222)522362, 8(7222) 522200<br /></strong></p><p><strong> </strong></p>', '', 1, 7, 0, 26, '2010-09-07 18:01:00', 62, '', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '2010-09-07 18:01:00', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_vote=0\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nlanguage=\nkeyref=\nreadmore=', 1, 0, 1, '', '', 0, 0, 'robots=\nauthor='),
+(19, 'toshiba satellite c650-15n', 'toshiba-satellite-c650-15n', '', '<p><img src="images/stories/203619.jpg" border="0" width="424" height="424" /> </p>', '<img src="images/stories/203619_1.jpg" border="0" width="426" height="426" /><p>&nbsp;</p><p>Процессор       тип : Процессор Intel® Pentium® P6000<br />тактовая частота : 1.86 ГГц<br />Передняя шина : 1,066 МГц<br />кэш 3-го уровня : 3 МБ<br /><br />Цвет корпуса     цвет : Черное покрытие с текстурным узором и черной клавиатурой<br />Системная память     стандартная : 2,048 МБ<br />максимальные возможности расширения : 8,192 МБ<br />технология : DDR3 RAM (1066 МГц)<br />Жесткий диск     емкость : 320 ГБ<br />скорость вращения диска : 5,400 об./мин.<br />Дисковод DVD Super Multi (Double Layer)     совместимость : CD-ROM, CD-R, CD-RW, DVD-ROM, DVD-R, DVD-R (с поддержкой двухслойной записи), DVD-RW, DVD+R, DVD+R (с поддержкой двухслойной записи), DVD+RW, DVD-RAM<br />максимальная скорость : Чтение: 24x CD-ROM, 8x DVD-ROM/ Запись: 24x CD-R, 4x CD-RW, 10x HS CD-RW, 24x US CD-RW, 8x DVD-R, 6x DVD-R (с поддержкой двухслойной записи), 6x DVD-RW, 8x DVD+R, 6x DVD+R (с поддержкой двухслойной записи), 8x DVD+RW, 5x DVD-RAM<br />тип : Дисковод DVD Super Multi (Double Layer)<br />Дисплей     размер : 39,6 см (15,6 дюйма)<br />тип : TFT-дисплей Toshiba TruBrite® формата высокой четкости с высокой яркостью и соотношением сторон 16 : 9 и светодиодной подсветкой<br />внутреннее разрешение : 1 366 x 768<br />Графический адаптер     изготовитель : Intel®<br />тип : Графический ускоритель Intel® Graphics Media Accelerator HD<br />объем памяти : до 763 МБ общей памяти при установленной системной памяти 2 ГБ и до 1307 МБ при системной памяти 4 ГБ (с предварительно установленной 32-разрядной операционной системой)<br />тип памяти : общая<br />Внутренние видеорежимы     Поддерживается:<br />разрешение : 1 366 x 768<br />Макс. число внешних видеорежимов     макс. разрешение : 2 048 x 1 536<br />макс. частота обновления : 85 Гц<br />разрешение без чередования при макс. скорости обновления : 1 600 x 1 200<br />Интерфейс     1 x Вход постоянного тока<br />1 x внешний монитор<br />1 x RJ-45<br />1 x внешний микрофон<br />1 x наушники (стерео)<br />1 x встроенная веб-камера VGA со встроенным микрофоном<br />2 (2 справа) x USB 2.0<br />1 x Многофункциональное устройство считывания с карт (поддержка карт SD™ до 2 ГБ, miniSD™/microSD™ с адаптером до 2 ГБ, SDHC™ до 32 ГБ, SDXC™ до 2 ТБ и MultiMedia Card™ до 2 ГБ)<br />Модули расширения     2 x разъемы памяти (1 или более)<br />Беспроводная связь     Соответствие : Wi-Fi®<br />Поддержка работы с сетью : 802.11b/g<br />Технология беспроводной связи : Беспроводная сеть<br />проводная связь     топология : Сеть Fast Ethernet<br />скорость : 10BASE-T/100BASE-TX<br />Звуковая система     поддерживаемый формат аудио : 24-разрядный стереозвук<br />динамики : встроенные стереодинамики<br />изготовитель : Звуковая система Toshiba Bass Enhanced Sound System<br />Клавиатура     клавиш : 102<br />клавиши Windows : Да<br />специальные функции : полноразмерная плоская черная клавиатура с цифровой клавиатурой на 10 цифр<br />Указывающее устройство     тип : Сенсорная панель с поддержкой технологии Multi Touch, позволяющая выполнять двумя пальцами жесты прокрутки, сводить, разводить и вращать пальцы.<br />Аккумулятор     технология : литий-ионный<br />максимальное время работы : до 2 ч. 30 мин. (Mobile Mark™ 2007)<br />Адаптер переменного тока     входное напряжение : Адаптер переменного тока с системой AutoSense (100/240 В) для использования в различных странах<br />выходное напряжение : 19 В<br />выходной ток : 3.42 А<br />Габаритные размеры     Ш x Д x В : 380,0 x 250,0 x 28,0 (спереди) / 37,9 (сзади) мм<br />масса : от 2,40 кг </p>', 1, 1, 0, 1, '2010-09-07 19:07:22', 62, '', '2010-09-07 19:14:07', 62, 0, '0000-00-00 00:00:00', '2010-09-07 19:07:22', '0000-00-00 00:00:00', '', '', 'show_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_vote=0\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nlanguage=\nkeyref=\nreadmore=', 3, 0, 1, '', '', 0, 7, 'robots=\nauthor=');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_content_frontpage`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_content_frontpage` (
+  `content_id` int(11) NOT NULL DEFAULT '0',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`content_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_content_frontpage`
+--
+
+INSERT INTO `jos_content_frontpage` (`content_id`, `ordering`) VALUES
+(2, 6),
+(3, 5),
+(4, 4),
+(5, 3),
+(6, 2),
+(19, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_content_rating`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_content_rating` (
+  `content_id` int(11) NOT NULL DEFAULT '0',
+  `rating_sum` int(11) unsigned NOT NULL DEFAULT '0',
+  `rating_count` int(11) unsigned NOT NULL DEFAULT '0',
+  `lastip` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`content_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_content_rating`
+--
+
+INSERT INTO `jos_content_rating` (`content_id`, `rating_sum`, `rating_count`, `lastip`) VALUES
+(9, 5, 1, '127.0.0.1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_core_acl_aro`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_core_acl_aro` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `section_value` varchar(240) NOT NULL DEFAULT '0',
+  `value` varchar(240) NOT NULL DEFAULT '',
+  `order_value` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `hidden` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `jos_section_value_value_aro` (`section_value`(100),`value`(100)),
+  KEY `jos_gacl_hidden_aro` (`hidden`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `jos_core_acl_aro`
+--
+
+INSERT INTO `jos_core_acl_aro` (`id`, `section_value`, `value`, `order_value`, `name`, `hidden`) VALUES
+(10, 'users', '62', 0, 'Administrator', 0),
+(11, 'users', '63', 0, 'maks', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_core_acl_aro_groups`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_core_acl_aro_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `lft` int(11) NOT NULL DEFAULT '0',
+  `rgt` int(11) NOT NULL DEFAULT '0',
+  `value` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `jos_gacl_parent_id_aro_groups` (`parent_id`),
+  KEY `jos_gacl_lft_rgt_aro_groups` (`lft`,`rgt`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+
+--
+-- Dumping data for table `jos_core_acl_aro_groups`
+--
+
+INSERT INTO `jos_core_acl_aro_groups` (`id`, `parent_id`, `name`, `lft`, `rgt`, `value`) VALUES
+(17, 0, 'ROOT', 1, 22, 'ROOT'),
+(28, 17, 'USERS', 2, 21, 'USERS'),
+(29, 28, 'Public Frontend', 3, 12, 'Public Frontend'),
+(18, 29, 'Registered', 4, 11, 'Registered'),
+(19, 18, 'Author', 5, 10, 'Author'),
+(20, 19, 'Editor', 6, 9, 'Editor'),
+(21, 20, 'Publisher', 7, 8, 'Publisher'),
+(30, 28, 'Public Backend', 13, 20, 'Public Backend'),
+(23, 30, 'Manager', 14, 19, 'Manager'),
+(24, 23, 'Administrator', 15, 18, 'Administrator'),
+(25, 24, 'Super Administrator', 16, 17, 'Super Administrator');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_core_acl_aro_map`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_core_acl_aro_map` (
+  `acl_id` int(11) NOT NULL DEFAULT '0',
+  `section_value` varchar(230) NOT NULL DEFAULT '0',
+  `value` varchar(100) NOT NULL,
+  PRIMARY KEY (`acl_id`,`section_value`,`value`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_core_acl_aro_map`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_core_acl_aro_sections`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_core_acl_aro_sections` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `value` varchar(230) NOT NULL DEFAULT '',
+  `order_value` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(230) NOT NULL DEFAULT '',
+  `hidden` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `jos_gacl_value_aro_sections` (`value`),
+  KEY `jos_gacl_hidden_aro_sections` (`hidden`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `jos_core_acl_aro_sections`
+--
+
+INSERT INTO `jos_core_acl_aro_sections` (`id`, `value`, `order_value`, `name`, `hidden`) VALUES
+(10, 'users', 1, 'Пользователи', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_core_acl_groups_aro_map`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_core_acl_groups_aro_map` (
+  `group_id` int(11) NOT NULL DEFAULT '0',
+  `section_value` varchar(240) NOT NULL DEFAULT '',
+  `aro_id` int(11) NOT NULL DEFAULT '0',
+  UNIQUE KEY `group_id_aro_id_groups_aro_map` (`group_id`,`section_value`,`aro_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_core_acl_groups_aro_map`
+--
+
+INSERT INTO `jos_core_acl_groups_aro_map` (`group_id`, `section_value`, `aro_id`) VALUES
+(18, '', 11),
+(25, '', 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_core_log_items`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_core_log_items` (
+  `time_stamp` date NOT NULL DEFAULT '0000-00-00',
+  `item_table` varchar(50) NOT NULL DEFAULT '',
+  `item_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `hits` int(11) unsigned NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_core_log_items`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_core_log_searches`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_core_log_searches` (
+  `search_term` varchar(128) NOT NULL DEFAULT '',
+  `hits` int(11) unsigned NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_core_log_searches`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_announcement`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_announcement` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `title` tinytext,
+  `sdescription` text NOT NULL,
+  `description` text NOT NULL,
+  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `ordering` tinyint(4) NOT NULL DEFAULT '0',
+  `showdate` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_fb_announcement`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_attachments`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_attachments` (
+  `mesid` int(11) NOT NULL DEFAULT '0',
+  `filelocation` text NOT NULL,
+  KEY `mesid` (`mesid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_fb_attachments`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent` int(11) DEFAULT '0',
+  `name` tinytext,
+  `cat_emoticon` tinyint(4) NOT NULL DEFAULT '0',
+  `locked` tinyint(4) NOT NULL DEFAULT '0',
+  `alert_admin` tinyint(4) NOT NULL DEFAULT '0',
+  `moderated` tinyint(4) NOT NULL DEFAULT '1',
+  `moderators` varchar(15) DEFAULT NULL,
+  `pub_access` tinyint(4) DEFAULT '1',
+  `pub_recurse` tinyint(4) DEFAULT '1',
+  `admin_access` tinyint(4) DEFAULT '0',
+  `admin_recurse` tinyint(4) DEFAULT '1',
+  `ordering` tinyint(4) NOT NULL DEFAULT '0',
+  `future2` int(11) DEFAULT '0',
+  `published` tinyint(4) NOT NULL DEFAULT '0',
+  `checked_out` tinyint(4) NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `review` tinyint(4) NOT NULL DEFAULT '0',
+  `hits` int(11) NOT NULL DEFAULT '0',
+  `description` text NOT NULL,
+  `headerdesc` text NOT NULL,
+  `class_sfx` varchar(20) NOT NULL,
+  `id_last_msg` int(10) NOT NULL DEFAULT '0',
+  `numTopics` mediumint(8) NOT NULL DEFAULT '0',
+  `numPosts` mediumint(8) NOT NULL DEFAULT '0',
+  `time_last_msg` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `parent` (`parent`),
+  KEY `published_pubaccess_id` (`published`,`pub_access`,`id`),
+  KEY `msg_id` (`id_last_msg`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `jos_fb_categories`
+--
+
+INSERT INTO `jos_fb_categories` (`id`, `parent`, `name`, `cat_emoticon`, `locked`, `alert_admin`, `moderated`, `moderators`, `pub_access`, `pub_recurse`, `admin_access`, `admin_recurse`, `ordering`, `future2`, `published`, `checked_out`, `checked_out_time`, `review`, `hits`, `description`, `headerdesc`, `class_sfx`, `id_last_msg`, `numTopics`, `numPosts`, `time_last_msg`) VALUES
+(1, 0, 'Как вам наш сайт?', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Здесь вы можете написать что бы вы хотели видеть на нашем сайте и ваши пожелания ', '', '', 0, 0, 0, NULL),
+(2, 1, 'Обновление сайта', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Ваши предложения по обновлению и нововведениям на нашем сайте', '', '', 0, 0, 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_favorites`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_favorites` (
+  `thread` int(11) NOT NULL DEFAULT '0',
+  `userid` int(11) NOT NULL DEFAULT '0',
+  KEY `thread` (`thread`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_fb_favorites`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_groups`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_groups` (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `jos_fb_groups`
+--
+
+INSERT INTO `jos_fb_groups` (`id`, `title`) VALUES
+(1, 'Пользователи');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_messages`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent` int(11) DEFAULT '0',
+  `thread` int(11) DEFAULT '0',
+  `catid` int(11) NOT NULL DEFAULT '0',
+  `name` tinytext,
+  `userid` int(11) NOT NULL DEFAULT '0',
+  `email` tinytext,
+  `subject` tinytext,
+  `time` int(11) NOT NULL DEFAULT '0',
+  `ip` varchar(15) DEFAULT NULL,
+  `topic_emoticon` int(11) NOT NULL DEFAULT '0',
+  `locked` tinyint(4) NOT NULL DEFAULT '0',
+  `hold` tinyint(4) NOT NULL DEFAULT '0',
+  `ordering` int(11) DEFAULT '0',
+  `hits` int(11) DEFAULT '0',
+  `moved` tinyint(4) DEFAULT '0',
+  `modified_by` int(7) DEFAULT NULL,
+  `modified_time` int(11) DEFAULT NULL,
+  `modified_reason` tinytext,
+  PRIMARY KEY (`id`),
+  KEY `thread` (`thread`),
+  KEY `parent` (`parent`),
+  KEY `catid` (`catid`),
+  KEY `ip` (`ip`),
+  KEY `userid` (`userid`),
+  KEY `time` (`time`),
+  KEY `locked` (`locked`),
+  KEY `hold_time` (`hold`,`time`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_fb_messages`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_messages_text`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_messages_text` (
+  `mesid` int(11) NOT NULL DEFAULT '0',
+  `message` text NOT NULL,
+  PRIMARY KEY (`mesid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_fb_messages_text`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_moderation`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_moderation` (
+  `catid` int(11) NOT NULL DEFAULT '0',
+  `userid` int(11) NOT NULL DEFAULT '0',
+  `future1` tinyint(4) DEFAULT '0',
+  `future2` int(11) DEFAULT '0',
+  PRIMARY KEY (`catid`,`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_fb_moderation`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_ranks`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_ranks` (
+  `rank_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `rank_title` varchar(255) NOT NULL DEFAULT '',
+  `rank_min` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `rank_special` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `rank_image` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`rank_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `jos_fb_ranks`
+--
+
+INSERT INTO `jos_fb_ranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
+(1, 'Fresh Boarder', 0, 0, 'rank1.gif'),
+(2, 'Junior Boarder', 20, 0, 'rank2.gif'),
+(3, 'Senior Boarder', 40, 0, 'rank3.gif'),
+(4, 'Expert Boarder', 80, 0, 'rank4.gif'),
+(5, 'Gold Boarder', 160, 0, 'rank5.gif'),
+(6, 'Platinum Boarder', 320, 0, 'rank6.gif'),
+(7, 'Administrator', 0, 1, 'rankadmin.gif'),
+(8, 'Moderator', 0, 1, 'rankmod.gif'),
+(9, 'Spammer', 0, 1, 'rankspammer.gif');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_sessions`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_sessions` (
+  `userid` int(11) NOT NULL DEFAULT '0',
+  `allowed` text,
+  `lasttime` int(11) NOT NULL DEFAULT '0',
+  `readtopics` text,
+  `currvisit` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_fb_sessions`
+--
+
+INSERT INTO `jos_fb_sessions` (`userid`, `allowed`, `lasttime`, `readtopics`, `currvisit`) VALUES
+(63, '1,2', 1283860882, '', 1296382595),
+(62, '1,2', 1252325265, '', 1283861701);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_smileys`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_smileys` (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `code` varchar(12) NOT NULL DEFAULT '',
+  `location` varchar(50) NOT NULL DEFAULT '',
+  `greylocation` varchar(60) NOT NULL DEFAULT '',
+  `emoticonbar` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
+
+--
+-- Dumping data for table `jos_fb_smileys`
+--
+
+INSERT INTO `jos_fb_smileys` (`id`, `code`, `location`, `greylocation`, `emoticonbar`) VALUES
+(1, 'B)', 'cool.png', 'cool-grey.png', 1),
+(2, ':(', 'sad.png', 'sad-grey.png', 1),
+(3, ':)', 'smile.png', 'smile-grey.png', 1),
+(4, ':-)', 'smile.png', 'smile-grey.png', 0),
+(5, ':-(', 'sad.png', 'sad-grey.png', 0),
+(6, ':laugh:', 'laughing.png', 'laughing-grey.png', 1),
+(7, ':cheer:', 'cheerful.png', 'cheerful-grey.png', 1),
+(8, ';)', 'wink.png', 'wink-grey.png', 1),
+(9, ';-)', 'wink.png', 'wink-grey.png', 0),
+(10, ':P', 'tongue.png', 'tongue-grey.png', 1),
+(12, ':X', 'sick.png', 'sick-grey.png', 0),
+(13, ':x', 'sick.png', 'sick-grey.png', 0),
+(14, ':angry:', 'angry.png', 'angry-grey.png', 1),
+(15, ':mad:', 'angry.png', 'angry-grey.png', 0),
+(16, ':unsure:', 'unsure.png', 'unsure-grey.png', 1),
+(17, ':ohmy:', 'shocked.png', 'shocked-grey.png', 1),
+(18, ':huh:', 'wassat.png', 'wassat-grey.png', 1),
+(19, ':dry:', 'ermm.png', 'ermm-grey.png', 1),
+(20, ':ermm:', 'ermm.png', 'ermm-grey.png', 0),
+(21, ':lol:', 'grin.png', 'grin-grey.png', 1),
+(22, ':sick:', 'sick.png', 'sick-grey.png', 1),
+(23, ':silly:', 'silly.png', 'silly-grey.png', 1),
+(24, ':y32b4:', 'silly.png', 'silly-grey.png', 0),
+(25, ':blink:', 'blink.png', 'blink-grey.png', 1),
+(26, ':blush:', 'blush.png', 'blush-grey.png', 1),
+(27, ':kiss:', 'kissing.png', 'kissing-grey.png', 1),
+(28, ':rolleyes:', 'blink.png', 'blink-grey.png', 0),
+(29, ':woohoo:', 'w00t.png', 'w00t-grey.png', 1),
+(30, ':side:', 'sideways.png', 'sideways-grey.png', 1),
+(31, ':S', 'dizzy.png', 'dizzy-grey.png', 1),
+(32, ':s', 'dizzy.png', 'dizzy-grey.png', 0),
+(33, ':evil:', 'devil.png', 'devil-grey.png', 1),
+(34, ':whistle:', 'whistling.png', 'whistling-grey.png', 1),
+(35, ':pinch:', 'pinch.png', 'pinch-grey.png', 1),
+(36, ':p', 'tongue.png', 'tongue-grey.png', 0),
+(37, ':D', 'laughing.png', 'laughing-grey.png', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_subscriptions`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_subscriptions` (
+  `thread` int(11) NOT NULL DEFAULT '0',
+  `userid` int(11) NOT NULL DEFAULT '0',
+  `future1` int(11) DEFAULT '0',
+  KEY `thread` (`thread`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_fb_subscriptions`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_users`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_users` (
+  `userid` int(11) NOT NULL DEFAULT '0',
+  `view` varchar(8) NOT NULL DEFAULT 'flat',
+  `signature` text,
+  `moderator` int(11) DEFAULT '0',
+  `ordering` int(11) DEFAULT '0',
+  `posts` int(11) DEFAULT '0',
+  `avatar` varchar(50) DEFAULT NULL,
+  `karma` int(11) DEFAULT '0',
+  `karma_time` int(11) DEFAULT '0',
+  `group_id` int(4) DEFAULT '1',
+  `uhits` int(11) DEFAULT '0',
+  `personalText` tinytext,
+  `gender` tinyint(4) NOT NULL DEFAULT '0',
+  `birthdate` date NOT NULL DEFAULT '0001-01-01',
+  `location` varchar(50) DEFAULT NULL,
+  `ICQ` varchar(50) DEFAULT NULL,
+  `AIM` varchar(50) DEFAULT NULL,
+  `YIM` varchar(50) DEFAULT NULL,
+  `MSN` varchar(50) DEFAULT NULL,
+  `SKYPE` varchar(50) DEFAULT NULL,
+  `GTALK` varchar(50) DEFAULT NULL,
+  `websitename` varchar(50) DEFAULT NULL,
+  `websiteurl` varchar(50) DEFAULT NULL,
+  `rank` tinyint(4) NOT NULL DEFAULT '0',
+  `hideEmail` tinyint(1) NOT NULL DEFAULT '1',
+  `showOnline` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`userid`),
+  KEY `group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_fb_users`
+--
+
+INSERT INTO `jos_fb_users` (`userid`, `view`, `signature`, `moderator`, `ordering`, `posts`, `avatar`, `karma`, `karma_time`, `group_id`, `uhits`, `personalText`, `gender`, `birthdate`, `location`, `ICQ`, `AIM`, `YIM`, `MSN`, `SKYPE`, `GTALK`, `websitename`, `websiteurl`, `rank`, `hideEmail`, `showOnline`) VALUES
+(63, 'flat', NULL, 0, 0, 0, NULL, 0, 0, 1, 0, NULL, 0, '0001-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 1),
+(62, 'flat', NULL, 1, 0, 0, NULL, 0, 0, 1, 0, NULL, 0, '0001-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_fb_whoisonline`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_fb_whoisonline` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `userid` int(7) NOT NULL DEFAULT '0',
+  `time` varchar(14) NOT NULL DEFAULT '0',
+  `item` int(6) DEFAULT '0',
+  `what` varchar(255) DEFAULT '0',
+  `func` varchar(50) DEFAULT NULL,
+  `do` varchar(50) DEFAULT NULL,
+  `task` varchar(50) DEFAULT NULL,
+  `link` text,
+  `userip` varchar(20) NOT NULL DEFAULT '',
+  `user` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `jos_fb_whoisonline`
+--
+
+INSERT INTO `jos_fb_whoisonline` (`id`, `userid`, `time`, `item`, `what`, `func`, `do`, `task`, `link`, `userip`, `user`) VALUES
+(12, 0, '1296387099', 0, 'Главная', '', '', '', '/index.php?option=com_fireboard&Itemid=4', '127.0.0.1', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_groups`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_groups` (
+  `id` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_groups`
+--
+
+INSERT INTO `jos_groups` (`id`, `name`) VALUES
+(0, 'Общий'),
+(1, 'Участники'),
+(2, 'Специальный');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_jcomments`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_jcomments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `parent` int(11) unsigned NOT NULL DEFAULT '0',
+  `object_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `object_group` varchar(255) NOT NULL DEFAULT '',
+  `object_params` text NOT NULL,
+  `lang` varchar(255) NOT NULL DEFAULT '',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `username` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `homepage` varchar(255) NOT NULL DEFAULT '',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `comment` text NOT NULL,
+  `ip` varchar(15) NOT NULL DEFAULT '',
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `isgood` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `ispoor` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `published` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `subscribe` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `source` varchar(255) NOT NULL DEFAULT '',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `editor` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `idx_userid` (`userid`),
+  KEY `idx_source` (`source`),
+  KEY `idx_email` (`email`),
+  KEY `idx_lang` (`lang`),
+  KEY `idx_subscribe` (`subscribe`),
+  KEY `idx_checkout` (`checked_out`),
+  KEY `idx_object` (`object_id`,`object_group`,`published`,`date`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `jos_jcomments`
+--
+
+INSERT INTO `jos_jcomments` (`id`, `parent`, `object_id`, `object_group`, `object_params`, `lang`, `userid`, `name`, `username`, `email`, `homepage`, `title`, `comment`, `ip`, `date`, `isgood`, `ispoor`, `published`, `subscribe`, `source`, `checked_out`, `checked_out_time`, `editor`) VALUES
+(2, 0, 6, 'com_content', '', 'ru-RU', 63, 'maks', 'maks', 'kolyanmail@mail.ru', '', '', 'best :-)', '127.0.0.1', '2010-09-07 18:40:00', 0, 0, 1, 0, '', 0, '0000-00-00 00:00:00', ''),
+(3, 0, 5, 'com_content', '', 'ru-RU', 63, 'maks', 'maks', 'kolyanmail@mail.ru', '', '', 'eeeeeeeeeeeee', '127.0.0.1', '2010-09-11 17:16:09', 0, 0, 1, 0, '', 0, '0000-00-00 00:00:00', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_jcomments_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_jcomments_settings` (
+  `component` varchar(50) NOT NULL DEFAULT '',
+  `lang` varchar(20) NOT NULL DEFAULT '',
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `value` text NOT NULL,
+  PRIMARY KEY (`component`,`lang`,`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_jcomments_settings`
+--
+
+INSERT INTO `jos_jcomments_settings` (`component`, `lang`, `name`, `value`) VALUES
+('', '', 'enable_username_check', '1'),
+('', '', 'username_maxlength', '20'),
+('', '', 'forbidden_names', 'administrator,moderator'),
+('', '', 'author_email', '2'),
+('', '', 'author_homepage', '0'),
+('', '', 'comment_maxlength', '1000'),
+('', '', 'word_maxlength', '15'),
+('', '', 'link_maxlength', '30'),
+('', '', 'flood_time', '30'),
+('', '', 'enable_notification', '1'),
+('', '', 'notification_email', ''),
+('', '', 'template', 'default'),
+('', '', 'enable_smiles', '1'),
+('', '', 'comments_per_page', '10'),
+('', '', 'comments_page_limit', '15'),
+('', '', 'comments_pagination', 'both'),
+('', '', 'comments_order', 'DESC'),
+('', '', 'show_commentlength', '1'),
+('', '', 'enable_nested_quotes', '1'),
+('', '', 'enable_rss', '1'),
+('', '', 'censor_replace_word', '[censored]'),
+('', '', 'can_comment', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'can_reply', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'show_policy', 'Unregistered,Registered'),
+('', '', 'enable_captcha', 'Unregistered'),
+('', '', 'floodprotection', 'Unregistered,Registered,Author,Editor'),
+('', '', 'enable_comment_length_check', 'Unregistered,Registered'),
+('', '', 'autopublish', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'autolinkurls', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'enable_subscribe', 'Unregistered,Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'enable_gravatar', 'Administrator,Super Administrator'),
+('', '', 'can_view_homepage', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'can_publish', 'Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'can_view_email', 'Manager,Administrator,Super Administrator'),
+('', '', 'can_edit', 'Manager,Administrator,Super Administrator'),
+('', '', 'can_edit_own', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'can_delete', 'Manager,Administrator,Super Administrator'),
+('', '', 'can_delete_own', 'Manager,Administrator,Super Administrator'),
+('', '', 'enable_bbcode_b', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'enable_bbcode_i', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'enable_bbcode_u', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'enable_bbcode_s', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'enable_bbcode_url', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'enable_bbcode_img', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'enable_bbcode_list', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'enable_bbcode_hide', 'Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'can_view_ip', 'Administrator,Super Administrator'),
+('', '', 'enable_categories', '1,2,3,4,5,6,7,8,11,12,13,14,15,16,17,19,21,24,25,30'),
+('', '', 'emailprotection', 'Unregistered'),
+('', '', 'enable_comment_maxlength_check', ''),
+('', '', 'enable_autocensor', 'Unregistered'),
+('', '', 'badwords', ''),
+('', '', 'smiles', ':D	laugh.gif\n:lol:	lol.gif\n:-)	smile.gif\n;-)	wink.gif\n8)	cool.gif\n:-|	normal.gif\n:-*	whistling.gif\n:oops:	redface.gif\n:sad:	sad.gif\n:cry:	cry.gif\n:o	surprised.gif\n:-?	confused.gif\n:-x	sick.gif\n:eek:	shocked.gif\n:zzz	sleeping.gif\n:P	tongue.gif\n:roll:	rolleyes.gif\n:sigh:	unsure.gif'),
+('', '', 'enable_mambots', '1'),
+('', '', 'form_show', '1'),
+('', '', 'display_author', 'name'),
+('', '', 'enable_voting', '1'),
+('', '', 'can_vote', 'Unregistered,Registered,Author,Editor,Publisher,Manager,Administrator,Super Administrator'),
+('', '', 'merge_time', '30'),
+('', '', 'gzip_js', '0'),
+('', '', 'template_view', 'list'),
+('', '', 'message_policy_post', ''),
+('', '', 'message_policy_whocancomment', ''),
+('', '', 'message_locked', 'This content has been locked. You can no longer post any comment.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_jcomments_subscriptions`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_jcomments_subscriptions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `object_group` varchar(255) NOT NULL DEFAULT '',
+  `lang` varchar(255) NOT NULL DEFAULT '',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `hash` varchar(255) NOT NULL DEFAULT '',
+  `published` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `idx_object` (`object_id`,`object_group`),
+  KEY `idx_lang` (`lang`),
+  KEY `idx_hash` (`hash`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_jcomments_subscriptions`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_jcomments_version`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_jcomments_version` (
+  `version` varchar(16) NOT NULL DEFAULT '',
+  `previous` varchar(16) NOT NULL DEFAULT '',
+  `installed` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`version`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_jcomments_version`
+--
+
+INSERT INTO `jos_jcomments_version` (`version`, `previous`, `installed`, `updated`) VALUES
+('2.0.0.20', '', '2010-09-07 14:48:07', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_jcomments_votes`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_jcomments_votes` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `commentid` int(11) unsigned NOT NULL DEFAULT '0',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0',
+  `ip` varchar(15) NOT NULL DEFAULT '',
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `value` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_comment` (`commentid`,`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_jcomments_votes`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_menu`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `menutype` varchar(75) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `link` text,
+  `type` varchar(50) NOT NULL DEFAULT '',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `parent` int(11) unsigned NOT NULL DEFAULT '0',
+  `componentid` int(11) unsigned NOT NULL DEFAULT '0',
+  `sublevel` int(11) DEFAULT '0',
+  `ordering` int(11) DEFAULT '0',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pollid` int(11) NOT NULL DEFAULT '0',
+  `browserNav` tinyint(4) DEFAULT '0',
+  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `utaccess` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `params` text NOT NULL,
+  `lft` int(11) unsigned NOT NULL DEFAULT '0',
+  `rgt` int(11) unsigned NOT NULL DEFAULT '0',
+  `home` int(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `componentid` (`componentid`,`menutype`,`published`,`access`),
+  KEY `menutype` (`menutype`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
+
+--
+-- Dumping data for table `jos_menu`
+--
+
+INSERT INTO `jos_menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+(1, 'mainmenu', 'Главная', 'home', 'index.php?option=com_content&view=frontpage', 'component', 1, 0, 20, 0, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 3, 'num_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=front\nmulti_column_order=1\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 1),
+(2, 'mainmenu', 'Наши услуги', '2010-09-06-12-22-27', 'index.php?option=com_content&view=article&id=7', 'component', 1, 0, 20, 0, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(3, 'mainmenu', 'Новости hi-tech', '2010-09-06-12-23-59', 'index.php?option=com_content&view=section&layout=blog&id=10', 'component', -2, 0, 20, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(4, 'mainmenu', 'Форум', '2010-09-06-12-26-03', 'index.php?option=com_fireboard', 'component', 1, 0, 52, 0, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'page_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(5, 'mainmenu', 'Информация', '2010-09-06-12-26-54', 'index.php?option=com_content&view=article&id=9', 'component', 1, 0, 20, 0, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(6, 'mainmenu', 'О нас', '2010-09-06-12-27-44', 'index.php?option=com_content&view=article&id=10', 'component', 1, 0, 20, 0, 8, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(7, 'mainmenu', 'fsdf', 'fsdf', 'index.php?option=com_attachments&view=update', 'component', -2, 0, 34, 1, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'who_can_see=\nwho_can_add=\npublish_default=\nauto_publish_warning=\nshow_column_titles=\nshow_description=\nshow_file_size=\nshow_downloads=\nshow_modification_date=\nmod_date_format=%x %H:%M\nsort_order=\nuser_field_1_name=\nuser_field_2_name=\nuser_field_3_name=\nmax_filename_length=0\nattachments_table_style=attachmentsList\nfile_link_open_mode=\nprepend=\nattachments_subdir=attachments\nattachments_titles=\nhide_attachments_for=\nsecure=0\ndownload_mode=\nregister_url=index.php?option=com_user&task=register\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\n\n', 0, 0, 0),
+(8, 'mainmenu', 'Контакты', '2010-09-06-16-39-52', 'index.php?option=com_contact&view=contact&id=1', 'component', 1, 0, 7, 0, 9, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_contact_list=0\nshow_category_crumb=0\ncontact_icons=\nicon_address=\nicon_email=\nicon_telephone=\nicon_mobile=\nicon_fax=\nicon_misc=\nshow_headings=\nshow_position=\nshow_email=\nshow_telephone=\nshow_mobile=\nshow_fax=\nallow_vcard=\nbanned_email=\nbanned_subject=\nbanned_text=\nvalidate_session=\ncustom_reply=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(9, 'mainmenu', 'Карта сайта', '2010-09-06-16-46-26', 'index.php?option=com_rd_sitemap&view=sitemap&id=1', 'component', 1, 0, 35, 0, 10, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'classdiv=\nmode=0\nshow_title=\ndefaulttitle=Sitemap Component by Run Digital\nheaderlevel=\nshow_rd_footer=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(10, 'mainmenu', 'Наша продукция', '2010-09-07-12-17-08', 'index.php?option=com_content&view=section&layout=blog&id=1', 'component', 1, 0, 20, 0, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(11, 'mainmenu', 'Мультимедиа', '2010-09-07-12-18-30', 'index.php?option=com_content&view=category&layout=blog&id=6', 'component', 1, 10, 20, 1, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(12, 'mainmenu', 'Мониторы', '2010-09-07-12-34-21', 'index.php?option=com_content&view=category&layout=blog&id=2', 'component', 1, 10, 20, 1, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(13, 'mainmenu', 'Компьютеры', '2010-09-07-12-35-36', 'index.php?option=com_content&view=category&layout=blog&id=1', 'component', 1, 10, 20, 1, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(14, 'mainmenu', 'Защитные устройства', '2010-09-07-12-52-22', 'index.php?option=com_content&view=category&layout=blog&id=5', 'component', 1, 10, 20, 1, 5, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(15, 'mainmenu', 'Программное обеспечение', '2010-09-07-12-53-26', 'index.php?option=com_content&view=category&layout=blog&id=3', 'component', 1, 10, 20, 1, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(16, 'mainmenu', 'Аксессуары и канцелярия', '2010-09-07-12-57-03', 'index.php?option=com_content&view=category&layout=blog&id=7', 'component', 1, 10, 20, 1, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(17, 'mainmenu', 'Видеокарты', '2010-09-07-12-57-58', 'index.php?option=com_content&view=category&layout=blog&id=15', 'component', 1, 10, 20, 1, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(18, 'mainmenu', 'Картриджи', '2010-09-07-13-00-24', 'index.php?option=com_content&view=category&layout=blog&id=19', 'component', 1, 10, 20, 1, 8, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(19, 'mainmenu', 'Другое', '2010-09-07-13-06-46', 'index.php?option=com_content&view=category&layout=blog&id=11', 'component', 1, 10, 20, 1, 18, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(20, 'mainmenu', 'Кассовые аппараты', '2010-09-07-13-07-43', 'index.php?option=com_content&view=category&layout=blog&id=24', 'component', 1, 10, 20, 1, 9, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(21, 'mainmenu', 'Клавиатуры, манипуляторы', '2010-09-07-13-09-26', 'index.php?option=com_content&view=category&layout=blog&id=8', 'component', 1, 10, 20, 1, 10, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(22, 'mainmenu', 'Материнские платы', '2010-09-07-13-10-55', 'index.php?option=com_content&view=category&layout=blog&id=14', 'component', 1, 10, 20, 1, 11, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(23, 'mainmenu', 'Модемы', '2010-09-07-13-12-04', 'index.php?option=com_content&view=category&layout=blog&id=17', 'component', 1, 10, 20, 1, 12, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(24, 'mainmenu', 'Накопители информации', '2010-09-07-13-13-33', 'index.php?option=com_content&view=category&layout=blog&id=16', 'component', 1, 10, 20, 1, 13, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(25, 'mainmenu', 'Память', '2010-09-07-13-14-45', 'index.php?option=com_content&view=category&layout=blog&id=13', 'component', 1, 10, 20, 1, 14, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(26, 'mainmenu', 'Процессора', '2010-09-07-13-16-09', 'index.php?option=com_content&view=category&layout=blog&id=12', 'component', 1, 10, 20, 1, 15, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(27, 'mainmenu', 'Сетевое оборудование', '2010-09-07-13-17-12', 'index.php?option=com_content&view=category&layout=blog&id=21', 'component', 1, 10, 20, 1, 16, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0),
+(28, 'mainmenu', 'Факсы и телефоны', '2010-09-07-13-19-11', 'index.php?option=com_content&view=category&layout=blog&id=25', 'component', 1, 10, 20, 1, 17, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'show_description=0\nshow_description_image=0\nnum_leading_articles=1\nnum_intro_articles=4\nnum_columns=1\nnum_links=0\norderby_pri=\norderby_sec=\nmulti_column_order=0\nshow_pagination=2\nshow_pagination_results=1\nshow_feed_link=1\nshow_noauth=\nshow_title=\nlink_titles=\nshow_intro=\nshow_section=\nlink_section=\nshow_category=\nlink_category=\nshow_author=\nshow_create_date=\nshow_modify_date=\nshow_item_navigation=\nshow_readmore=\nshow_vote=\nshow_icons=\nshow_pdf_icon=\nshow_print_icon=\nshow_email_icon=\nshow_hits=\nfeed_summary=\npage_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_menu_types`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_menu_types` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `menutype` varchar(75) NOT NULL DEFAULT '',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `description` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `menutype` (`menutype`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `jos_menu_types`
+--
+
+INSERT INTO `jos_menu_types` (`id`, `menutype`, `title`, `description`) VALUES
+(1, 'mainmenu', 'Главное меню', 'Основное меню сайта');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_messages`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_messages` (
+  `message_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id_from` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_id_to` int(10) unsigned NOT NULL DEFAULT '0',
+  `folder_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `date_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `state` int(11) NOT NULL DEFAULT '0',
+  `priority` int(1) unsigned NOT NULL DEFAULT '0',
+  `subject` text NOT NULL,
+  `message` text NOT NULL,
+  PRIMARY KEY (`message_id`),
+  KEY `useridto_state` (`user_id_to`,`state`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_messages`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_messages_cfg`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_messages_cfg` (
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `cfg_name` varchar(100) NOT NULL DEFAULT '',
+  `cfg_value` varchar(255) NOT NULL DEFAULT '',
+  UNIQUE KEY `idx_user_var_name` (`user_id`,`cfg_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_messages_cfg`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_migration_backlinks`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_migration_backlinks` (
+  `itemid` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `url` text NOT NULL,
+  `sefurl` text NOT NULL,
+  `newurl` text NOT NULL,
+  PRIMARY KEY (`itemid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_migration_backlinks`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_modules`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_modules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
+  `content` text NOT NULL,
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `position` varchar(50) DEFAULT NULL,
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `module` varchar(50) DEFAULT NULL,
+  `numnews` int(11) NOT NULL DEFAULT '0',
+  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `showtitle` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `params` text NOT NULL,
+  `iscore` tinyint(4) NOT NULL DEFAULT '0',
+  `client_id` tinyint(4) NOT NULL DEFAULT '0',
+  `control` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `published` (`published`,`access`),
+  KEY `newsfeeds` (`module`,`published`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+
+--
+-- Dumping data for table `jos_modules`
+--
+
+INSERT INTO `jos_modules` (`id`, `title`, `content`, `ordering`, `position`, `checked_out`, `checked_out_time`, `published`, `module`, `numnews`, `access`, `showtitle`, `params`, `iscore`, `client_id`, `control`) VALUES
+(1, 'Главное меню', '', 0, 'left', 0, '0000-00-00 00:00:00', 1, 'mod_mainmenu', 0, 0, 0, 'menutype=mainmenu\nmenu_style=list\nstartLevel=0\nendLevel=5\nshowAllChildren=0\nwindow_open=\nshow_whitespace=0\ncache=1\ntag_id=\nclass_sfx=\nmoduleclass_sfx=_menu\nmaxdepth=10\nmenu_images=0\nmenu_images_align=0\nmenu_images_link=0\nexpand_menu=0\nactivate_parent=0\nfull_active_id=0\nindent_image=0\nindent_image1=\nindent_image2=\nindent_image3=\nindent_image4=\nindent_image5=\nindent_image6=\nspacer=\nend_spacer=\n\n', 1, 0, ''),
+(2, 'Авторизация', '', 1, 'login', 0, '0000-00-00 00:00:00', 1, 'mod_login', 0, 0, 1, '', 1, 1, ''),
+(3, 'Популярное', '', 3, 'cpanel', 0, '0000-00-00 00:00:00', 1, 'mod_popular', 0, 2, 1, '', 0, 1, ''),
+(4, 'Новое', '', 4, 'cpanel', 0, '0000-00-00 00:00:00', 1, 'mod_latest', 0, 2, 1, 'ordering=c_dsc\nuser_id=0\ncache=0\n\n', 0, 1, ''),
+(5, 'Статистика меню', '', 5, 'cpanel', 0, '0000-00-00 00:00:00', 1, 'mod_stats', 0, 2, 1, '', 0, 1, ''),
+(6, 'Новые сообщения', '', 1, 'header', 0, '0000-00-00 00:00:00', 1, 'mod_unread', 0, 2, 1, '', 1, 1, ''),
+(7, 'Активные пользователи', '', 2, 'header', 0, '0000-00-00 00:00:00', 1, 'mod_online', 0, 2, 1, '', 1, 1, ''),
+(8, 'Панель инструментов', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', 1, 'mod_toolbar', 0, 2, 1, '', 1, 1, ''),
+(9, 'Значки быстрого доступа', '', 1, 'icon', 0, '0000-00-00 00:00:00', 1, 'mod_quickicon', 0, 2, 1, '', 1, 1, ''),
+(10, 'Активные пользователи', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', 1, 'mod_logged', 0, 2, 1, '', 0, 1, ''),
+(11, 'Нижний колонтитул', '', 0, 'footer', 0, '0000-00-00 00:00:00', 1, 'mod_footer', 0, 0, 1, '', 1, 1, ''),
+(12, 'Меню Администратора', '', 1, 'menu', 0, '0000-00-00 00:00:00', 1, 'mod_menu', 0, 2, 1, '', 0, 1, ''),
+(13, 'Подменю Администратора', '', 1, 'submenu', 0, '0000-00-00 00:00:00', 1, 'mod_submenu', 0, 2, 1, '', 0, 1, ''),
+(14, 'Статус пользователя', '', 1, 'status', 0, '0000-00-00 00:00:00', 1, 'mod_status', 0, 2, 1, '', 0, 1, ''),
+(15, 'Заголовок (Title)', '', 1, 'title', 0, '0000-00-00 00:00:00', 1, 'mod_title', 0, 2, 1, '', 0, 1, ''),
+(16, 'Поиск по сайту', '', 0, 'right', 0, '0000-00-00 00:00:00', 1, 'mod_search', 0, 0, 0, 'moduleclass_sfx=\nwidth=30\ntext=\nbutton=\nbutton_pos=right\nimagebutton=\nbutton_text=\ncache=1\ncache_time=900\n\n', 0, 0, ''),
+(17, 'верхнее меню', '', 0, 'hornav', 62, '2010-09-07 08:39:00', 1, 'mod_mainmenu', 0, 0, 0, 'menutype=mainmenu\nmenu_style=list\nstartLevel=0\nendLevel=0\nshowAllChildren=0\nwindow_open=\nshow_whitespace=0\ncache=1\ntag_id=\nclass_sfx=\nmoduleclass_sfx=\nmaxdepth=10\nmenu_images=0\nmenu_images_align=0\nmenu_images_link=0\nexpand_menu=0\nactivate_parent=0\nfull_active_id=0\nindent_image=0\nindent_image1=\nindent_image2=\nindent_image3=\nindent_image4=\nindent_image5=\nindent_image6=\nspacer=\nend_spacer=\n\n', 0, 0, ''),
+(18, 'Авторизация', '', 0, 'right', 0, '0000-00-00 00:00:00', 1, 'mod_cblogin', 0, 0, 1, 'moduleclass_sfx=\nhorizontal=0\ncompact=0\npretext=\nposttext=\nlogoutpretext=\nlogoutposttext=\nlogin=\nlogout=index.php\nshow_lostpass=1\nshow_newaccount=1\nshow_username_pass_icons=0\nname_lenght=14\npass_lenght=14\nshow_buttons_icons=0\nshow_remind_register_icons=0\nlogin_message=0\nlogout_message=0\nremember_enabled=1\ngreeting=1\nname=0\nshow_avatar=2\navatar_position=default\ntext_show_profile=Профиль\ntext_edit_profile=\npms_type=0\nshow_pms=0\nshow_connection_notifications=0\nhttps_post=0\ncb_plugins=1\n\n', 0, 0, ''),
+(19, 'Подписка на новости', '', 0, 'left', 0, '0000-00-00 00:00:00', 0, 'mod_ccnewsletter', 0, 0, 1, 'style=mootools\nintroduction=\nlname=Имя\nlemail=Email\nlsubscribe=Подписаться\nlunsubscribe=Отписаться\nlmove=Переместить\nlclose=Закрыть\nnamewarning=Введите Ваше имя!!\nemailwarning=Введите Ваш действующий адрес email!!\nterms_cond_warn=Ознакомьтесь с Правилами и условиями!!\nunsubscribe_button=0\nshowterm=0\nshowterm_text=Правила и условия\nid=0\ncache=1\ncache_time=900\nmoduleclass_sfx=\n\n', 0, 0, ''),
+(20, 'YOOaccordion', '', 0, 'left', 0, '0000-00-00 00:00:00', 1, 'mod_yoo_accordion', 0, 0, 0, 'catid=26\nstyle=default\nopen=first\nmultiple_open=0\norder=o_asc\nreadmore=0\nitems=4\nmoduleclass_sfx=-blank\ncache=0\ncache_time=900\n\n', 0, 0, ''),
+(21, 'Облако тегов', '', 2, 'right', 0, '0000-00-00 00:00:00', 1, 'mod_jvclouds3D', 0, 0, 1, 'JC_vidjet=0\nJC_text_header=\nJC_text_header_color=#ffffff\nJC_link_color=\nJC_head_color=#514425\nJC_body_color=#ffffff\nJC_border_color=#000000\nJC_chache=0\nJC_time_chache=3600\nJC_jquery=0\nJC_ui_mouse=0\nJC_ui_draggable_ext=0\nJC_ui_draggable=0\nJC_position=0\nJC_position_top=0\nJC_position_left=0\nJC_width=200\nJC_slide=0\nJC_count_tags=40\nJC_format=0\nJC_zav=1\nJC_sort=4\nJC_text_align=center\nJC_rating=1\nJC_max_length=15\nJC_min_length=8\nJC_max_font=24\nJC_min_font=10\nJC_line_height=\nJC_limit=\nJC_proc=40\nJC_proc_slovosoch=40\nJC_cat=\nJC_sec=\nJC_meta_tags=0\nJC_meta_tags_rating=0\nJC_black_words=\nJC_white_words=\nJC_about=0\nJC_flash=0\nJC_flash_speed=100\nJC_flash_alt_text=No Flash!\nJC_flash_width=200\nJC_flash_height=200\nJC_flash_bgcolor=FFFFFF\nJC_flash_text_color=000000\nJC_flash_trans=0\nmoduleclass_sfx=\n\n', 0, 0, ''),
+(22, 'Vinaora Visitors Counter', '', 0, 'right', 0, '0000-00-00 00:00:00', 1, 'mod_vvisit_counter', 0, 2, 0, 'moduleclass_sfx=\ntoday=Сегодня\nyesterday=Вчера\nweek=На этой недели\nlweek=На прошлой недели\nmonth=В этом месяце\nlmonth=В прошлом месяце\nall=Все\nbeginday=\nonline=Online (20 minutes ago):\nguestip=Your IP:\nguestinfo=Yes\nformattime=Now is: %Y-%m-%d %H:%M\ndigit_type=default\nstats_type=default\nwidthtable=90\nsessiontime=10\ninitialvalue=1\nissunday=1\niscache=1\ncheckdatabase=1\ndeldays=70\npretext=\nposttext=\n\n', 0, 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_modules_menu`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_modules_menu` (
+  `moduleid` int(11) NOT NULL DEFAULT '0',
+  `menuid` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`moduleid`,`menuid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_modules_menu`
+--
+
+INSERT INTO `jos_modules_menu` (`moduleid`, `menuid`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 5),
+(1, 6),
+(1, 8),
+(1, 9),
+(1, 10),
+(1, 11),
+(1, 12),
+(1, 13),
+(1, 14),
+(1, 15),
+(1, 16),
+(1, 17),
+(1, 18),
+(1, 19),
+(1, 20),
+(1, 21),
+(1, 22),
+(1, 23),
+(1, 24),
+(1, 25),
+(1, 26),
+(1, 27),
+(1, 28),
+(16, 1),
+(16, 2),
+(16, 3),
+(16, 5),
+(16, 6),
+(16, 8),
+(16, 9),
+(16, 10),
+(16, 11),
+(16, 12),
+(16, 13),
+(16, 14),
+(16, 15),
+(16, 16),
+(16, 17),
+(16, 18),
+(16, 19),
+(16, 20),
+(16, 21),
+(16, 22),
+(16, 23),
+(16, 24),
+(16, 25),
+(16, 26),
+(16, 27),
+(16, 28),
+(17, 0),
+(18, 1),
+(18, 2),
+(18, 3),
+(18, 5),
+(18, 6),
+(18, 8),
+(18, 9),
+(18, 10),
+(18, 11),
+(18, 12),
+(18, 13),
+(18, 14),
+(18, 15),
+(18, 16),
+(18, 17),
+(18, 18),
+(18, 19),
+(18, 20),
+(18, 21),
+(18, 22),
+(18, 23),
+(18, 24),
+(18, 25),
+(18, 26),
+(18, 27),
+(18, 28),
+(19, 1),
+(19, 2),
+(19, 3),
+(19, 5),
+(19, 6),
+(19, 8),
+(19, 9),
+(19, 10),
+(19, 11),
+(19, 12),
+(19, 13),
+(19, 14),
+(19, 15),
+(19, 16),
+(19, 17),
+(19, 18),
+(19, 19),
+(19, 20),
+(19, 21),
+(19, 22),
+(19, 23),
+(19, 24),
+(19, 25),
+(19, 26),
+(19, 27),
+(19, 28),
+(20, 1),
+(20, 2),
+(20, 3),
+(20, 5),
+(20, 6),
+(20, 8),
+(20, 9),
+(20, 10),
+(20, 11),
+(20, 12),
+(20, 13),
+(20, 14),
+(20, 15),
+(20, 16),
+(20, 17),
+(20, 18),
+(20, 19),
+(20, 20),
+(20, 21),
+(20, 22),
+(20, 23),
+(20, 24),
+(20, 25),
+(20, 26),
+(20, 27),
+(20, 28),
+(21, 1),
+(21, 2),
+(21, 3),
+(21, 5),
+(21, 6),
+(21, 8),
+(21, 9),
+(21, 10),
+(21, 11),
+(21, 12),
+(21, 13),
+(21, 14),
+(21, 15),
+(21, 16),
+(21, 17),
+(21, 18),
+(21, 19),
+(21, 20),
+(21, 21),
+(21, 22),
+(21, 23),
+(21, 24),
+(21, 25),
+(21, 26),
+(21, 27),
+(21, 28),
+(22, 1),
+(22, 2),
+(22, 3),
+(22, 5),
+(22, 6),
+(22, 8),
+(22, 9),
+(22, 10),
+(22, 11),
+(22, 12),
+(22, 13),
+(22, 14),
+(22, 15),
+(22, 16),
+(22, 17),
+(22, 18),
+(22, 19),
+(22, 20),
+(22, 21),
+(22, 22),
+(22, 23),
+(22, 24),
+(22, 25),
+(22, 26),
+(22, 27),
+(22, 28);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_newsfeeds`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_newsfeeds` (
+  `catid` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `link` text NOT NULL,
+  `filename` varchar(200) DEFAULT NULL,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `numarticles` int(11) unsigned NOT NULL DEFAULT '1',
+  `cache_time` int(11) unsigned NOT NULL DEFAULT '3600',
+  `checked_out` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `rtl` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `published` (`published`),
+  KEY `catid` (`catid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_newsfeeds`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_plugins`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_plugins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `element` varchar(100) NOT NULL DEFAULT '',
+  `folder` varchar(100) NOT NULL DEFAULT '',
+  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `published` tinyint(3) NOT NULL DEFAULT '0',
+  `iscore` tinyint(3) NOT NULL DEFAULT '0',
+  `client_id` tinyint(3) NOT NULL DEFAULT '0',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `params` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_folder` (`published`,`client_id`,`access`,`folder`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
+
+--
+-- Dumping data for table `jos_plugins`
+--
+
+INSERT INTO `jos_plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES
+(1, 'Аутентификация - Joomla', 'joomla', 'authentication', 0, 1, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(2, 'Аутентификация - LDAP', 'ldap', 'authentication', 0, 2, 0, 1, 0, 0, '0000-00-00 00:00:00', 'host=\nport=389\nuse_ldapV3=0\nnegotiate_tls=0\nno_referrals=0\nauth_method=bind\nbase_dn=\nsearch_string=\nusers_dn=\nusername=\npassword=\nldap_fullname=fullName\nldap_email=mail\nldap_uid=uid\n\n'),
+(3, 'Аутентификация - GMail', 'gmail', 'authentication', 0, 4, 0, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(4, 'Аутентификация - OpenID', 'openid', 'authentication', 0, 3, 0, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(5, 'Пользователь - Joomla!', 'joomla', 'user', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', 'autoregister=1\n\n'),
+(6, 'Поиск в статьях', 'content', 'search', 0, 1, 1, 1, 0, 0, '0000-00-00 00:00:00', 'search_limit=50\nsearch_content=1\nsearch_uncategorised=1\nsearch_archived=1\n\n'),
+(7, 'Поиск в контактах', 'contacts', 'search', 0, 3, 1, 1, 0, 0, '0000-00-00 00:00:00', 'search_limit=50\n\n'),
+(8, 'Поиск в категориях', 'categories', 'search', 0, 4, 1, 0, 0, 0, '0000-00-00 00:00:00', 'search_limit=50\n\n'),
+(9, 'Поиск в разделах', 'sections', 'search', 0, 5, 1, 0, 0, 0, '0000-00-00 00:00:00', 'search_limit=50\n\n'),
+(10, 'Поиск в новостях', 'newsfeeds', 'search', 0, 6, 1, 0, 0, 0, '0000-00-00 00:00:00', 'search_limit=50\n\n'),
+(11, 'Поиск в веб-ссылах', 'weblinks', 'search', 0, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', 'search_limit=50\n\n'),
+(12, 'Разрыв страницы в статьях', 'pagebreak', 'content', 0, 10000, 1, 1, 0, 0, '0000-00-00 00:00:00', 'enabled=1\ntitle=1\nmultipage_toc=1\nshowall=1\n\n'),
+(13, 'Рейтинг статей', 'vote', 'content', 0, 4, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(14, 'Маскировка e-mail в статьях', 'emailcloak', 'content', 0, 5, 1, 0, 0, 0, '0000-00-00 00:00:00', 'mode=1\n\n'),
+(15, 'Подсветка кода (GeSHi) в статьях', 'geshi', 'content', 0, 5, 0, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(16, 'Загрузка модулей в статьи', 'loadmodule', 'content', 0, 6, 1, 0, 0, 0, '0000-00-00 00:00:00', 'enabled=1\nstyle=0\n\n'),
+(17, 'Указатель статьи', 'pagenavigation', 'content', 0, 2, 1, 1, 0, 0, '0000-00-00 00:00:00', 'position=1\n\n'),
+(18, 'Простой редактор HTML', 'none', 'editors', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(19, 'Редактор - TinyMCE 2.0', 'tinymce', 'editors', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', 'theme=advanced\ncleanup=1\ncleanup_startup=0\nautosave=0\ncompressed=0\nrelative_urls=1\ntext_direction=ltr\nlang_mode=0\nlang_code=ru\ninvalid_elements=applet\ncontent_css=1\ncontent_css_custom=\nnewlines=0\ntoolbar=top\nhr=1\nsmilies=1\ntable=1\nstyle=1\nlayer=1\nxhtmlxtras=0\ntemplate=0\ndirectionality=1\nfullscreen=1\nhtml_height=550\nhtml_width=750\npreview=1\ninsertdate=1\nformat_date=%Y-%m-%d\ninserttime=1\nformat_time=%H:%M:%S\n\n'),
+(20, 'Редактор - XStandard Lite 2.0', 'xstandard', 'editors', 0, 0, 0, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(21, 'Кнопка редактора - Изображение', 'image', 'editors-xtd', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(22, 'Кнопка редактора - Разрыв страницы', 'pagebreak', 'editors-xtd', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(23, 'Кнопка редактора - Читать полностью...', 'readmore', 'editors-xtd', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(24, 'XML-RPC - Joomla', 'joomla', 'xmlrpc', 0, 7, 0, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(25, 'XML-RPC - Blogger API', 'blogger', 'xmlrpc', 0, 7, 0, 1, 0, 0, '0000-00-00 00:00:00', 'catid=1\nsectionid=0\n\n'),
+(27, 'Система - SEF', 'sef', 'system', 0, 1, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(28, 'Система - Отладка', 'debug', 'system', 0, 2, 1, 0, 0, 0, '0000-00-00 00:00:00', 'queries=1\nmemory=1\nlangauge=1\n\n'),
+(29, 'Система - Обратная совместимость', 'legacy', 'system', 0, 3, 1, 1, 0, 0, '0000-00-00 00:00:00', 'route=0\n\n'),
+(30, 'Система - Кэш', 'cache', 'system', 0, 4, 0, 1, 0, 0, '0000-00-00 00:00:00', 'browsercache=0\ncachetime=15\n\n'),
+(31, 'Система - Журнал', 'log', 'system', 0, 5, 0, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(32, 'Система - Запомнить меня', 'remember', 'system', 0, 6, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(33, 'Система - Обратные ссылки', 'backlink', 'system', 0, 7, 0, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(34, 'Content - Attachments', 'attachments', 'content', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(35, 'Editor Button - AddAttachment', 'add_attachment', 'editors-xtd', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(36, 'Search - Attachments', 'attachments', 'search', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', 'search_limit=50\n'),
+(37, 'Content - JComments', 'jcomments.content', 'content', 0, 10001, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(38, 'Search - JComments', 'jcomments.search', 'search', 0, 7, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(39, 'System - JComments', 'jcomments.system', 'system', 0, 8, 1, 0, 0, 62, '2010-09-07 11:08:56', ''),
+(40, 'Editor Button - JComments ON', 'jcommentson', 'editors-xtd', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(41, 'Editor Button - JComments OFF', 'jcommentsoff', 'editors-xtd', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(42, 'JComments - Avatar', 'jcomments.avatar', 'jcomments', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', 'avatar_type=cb\navatar_link=1\navatar_link_target=_blank\n\n');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_polls`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_polls` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `voters` int(9) NOT NULL DEFAULT '0',
+  `checked_out` int(11) NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `access` int(11) NOT NULL DEFAULT '0',
+  `lag` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `jos_polls`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_poll_data`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_poll_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pollid` int(11) NOT NULL DEFAULT '0',
+  `text` text NOT NULL,
+  `hits` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `pollid` (`pollid`,`text`(1))
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `jos_poll_data`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_poll_date`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_poll_date` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `vote_id` int(11) NOT NULL DEFAULT '0',
+  `poll_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `poll_id` (`poll_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_poll_date`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_poll_menu`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_poll_menu` (
+  `pollid` int(11) NOT NULL DEFAULT '0',
+  `menuid` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pollid`,`menuid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_poll_menu`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_rd_sitemap_rel_viewset_has_view`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_rd_sitemap_rel_viewset_has_view` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `viewset` int(11) unsigned NOT NULL,
+  `view` int(11) unsigned NOT NULL,
+  `ordering` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_viewset` (`viewset`),
+  KEY `id_view` (`view`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `jos_rd_sitemap_rel_viewset_has_view`
+--
+
+INSERT INTO `jos_rd_sitemap_rel_viewset_has_view` (`id`, `viewset`, `view`, `ordering`) VALUES
+(1, 1, 5, 0),
+(2, 1, 1, 1),
+(3, 1, 4, 2),
+(4, 2, 3, 0),
+(5, 2, 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_rd_sitemap_view`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_rd_sitemap_view` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(100) NOT NULL,
+  `title` text NOT NULL,
+  `creation_date` varchar(255) NOT NULL,
+  `author` varchar(255) NOT NULL,
+  `copyright` varchar(255) NOT NULL,
+  `author_email` varchar(255) NOT NULL,
+  `author_url` varchar(255) NOT NULL,
+  `version` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `content` text NOT NULL,
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `params` text NOT NULL,
+  `control` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `published` (`published`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `jos_rd_sitemap_view`
+--
+
+INSERT INTO `jos_rd_sitemap_view` (`id`, `type`, `title`, `creation_date`, `author`, `copyright`, `author_email`, `author_url`, `version`, `description`, `content`, `checked_out`, `checked_out_time`, `published`, `params`, `control`) VALUES
+(1, 'view', 'Content', '17 Aug 2007', 'Robert Deutz', 'This component in released under the GNU/GPL License', 'contact@run-digital.com', 'www.run-digital.com', '1.0', 'This is a View for the Run-Digital Sitemap Component, it shows the content', '\n        \nSELECT\n  c.title as title,\n  s.title as section,\n  cat.title as category,\n  CONCAT(''index.php?option=com_content&view=article&id='', c.id)  as link  , \nc.catid as catslug,\n  \nCASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS('':'', c.id, c.alias) ELSE c.id END as slug\n		\nFROM\n  #__content as c,\n  #__sections as s,\n  #__categories as cat\nWHERE \n  c.sectionid = s.id \n  AND c.catid = cat.id\n  AND c.state = ''1''\n  AND s.published = ''1''\n  AND cat.published = ''1''\n  AND ( c.publish_up = ''0000-00-00 00:00:00'' OR c.publish_up <= ''{NOW}'' )\n  AND ( c.publish_down = ''0000-00-00 00:00:00'' OR c.publish_down >= ''{NOW}'' )\n  AND c.access <= ''{USER_GID}''\n  {AND c.sectionid IN ({sectionid}) }\n  ORDER BY  s.title, cat.title,c.title\n\n	', 0, '0000-00-00 00:00:00', 1, '', '<config><params group="extra">\n		<param name="sectionid" type="text" default="" label="SECTIONID" description="DESCSECTIONID"/>\n	</params></config>'),
+(2, 'view', 'Categories', '17 Aug 2007', 'Robert Deutz', 'This component in released under the GNU/GPL License', 'contact@run-digital.com', 'www.run-digital.com', '1.0', 'This is a View for the Run-Digital Sitemap Component, it shows the categories', '\n        \nSELECT\n  cat.title as title,\n  s.title as section,\n  '''' as category,\n  concat(''index.php?option=com_content&view=category&layout=blog&id='',cat.id) as link, cat.id as bcatid, s.id as bsecid		\nFROM\n    #__sections as s,\n    #__categories as cat\nWHERE\n  cat.section = s.id\n  AND s.published = ''1''\n  AND cat.published = ''1''\n  AND cat.access <= ''{USER_GID}''\n  AND s.access <= ''{USER_GID}''\n  {AND c.sectionid IN ({sectionid}) }\n  {AND cat.id IN ({catid}) }\n  ORDER BY  s.title, cat.title\n\n	', 0, '0000-00-00 00:00:00', 1, '', '<config><params group="extra">\n		<param name="sectionid" type="text" default="" label="SECTIONID" description="DESCSECTIONID"/>\n		<param name="catid" type="text" default="" label="CATID" description="DESCCATID"/>\n	</params></config>'),
+(3, 'view', 'Sections', '17 Aug 2007', 'Robert Deutz', 'This component in released under the GNU/GPL License', 'contact@run-digital.com', 'www.run-digital.com', '1.0', 'This is a View for the Run-Digital Sitemap Component, it shows the sections', '\n        \nSELECT\n  s.title as title,\n  '''' as section,\n  '''' as category,\n  concat(''index.php?option=com_content&view=section&layout=blog&id='',s.id) as link,\ns.id as secid \nFROM\n    #__sections as s\nWHERE \n  s.published = ''1''\n  AND access <= ''{USER_GID}''\n  {AND c.sectionid IN ({sectionid}) }\n  ORDER BY  s.title\n\n	', 0, '0000-00-00 00:00:00', 1, '', '<config><params group="extra">\n		<param name="sectionid" type="text" default="" label="SECTIONID" description="DESCSECTIONID"/>\n	</params></config>'),
+(4, 'view', 'Content Archiv', '17 Aug 2007', 'Robert Deutz', 'This component in released under the GNU/GPL License', 'contact@run-digital.com', 'www.run-digital.com', '1.0', 'This is a View for the Run-Digital Sitemap Component, it shows the content archiv', '\n        \nSELECT\n  c.title as title,\n  s.title as section,\n  cat.title as category,\n  CONCAT(''index.php?option=com_content&view=article&id='', c.id)  as link, \nc.catid as catslug,\n  \nCASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS('':'', c.id, c.alias) ELSE c.id END as slug\n		\nFROM\n  #__content as c,\n  #__sections as s,\n  #__categories as cat\nWHERE \n  c.sectionid = s.id \n  AND c.catid = cat.id\n  AND c.state = ''-1''\n  AND s.published = ''1''\n  AND cat.published = ''1''\n  AND ( c.publish_up = ''0000-00-00 00:00:00'' OR c.publish_up <= ''{NOW}'' )\n  AND ( c.publish_down = ''0000-00-00 00:00:00'' OR c.publish_down >= ''{NOW}'' )\n  AND c.access <= ''{USER_GID}''\n  {AND c.sectionid IN ({sectionid}) }\n  ORDER BY  s.title, cat.title,c.title        \n		\n	', 0, '0000-00-00 00:00:00', 1, '', '<config><params group="extra">\n		<param name="sectionid" type="text" default="" label="SECTIONID" description="DESCSECTIONID"/>\n	</params></config>'),
+(5, 'menu', 'Menu', '20 Aug 2007', 'Robert Deutz', 'This component in released under the GNU/GPL License', 'contact@run-digital.com', 'www.run-digital.com', '1.0', 'This is a View for the Run-Digital Sitemap Component, it shows menu', '\n        \nSELECT\n  m.*\nFROM\n  #__menu as m\nWHERE\n  m.published = ''1''\n  AND m.access <= ''{USER_GID}''\n  {AND m.menutype = ''{menutype}'' }\n  ORDER BY m.menutype,m.parent, m.sublevel, m.ordering\n      \n	', 0, '0000-00-00 00:00:00', 1, 'menutype=mainmenu', '<config><params group="extra">\n		<param name="menutype" type="text" default="" label="MENUTYPE" description="DESCMENUTYPE"/>\n	</params></config>');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_rd_sitemap_viewset`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_rd_sitemap_viewset` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
+  `content` text NOT NULL,
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `params` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `published` (`published`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `jos_rd_sitemap_viewset`
+--
+
+INSERT INTO `jos_rd_sitemap_viewset` (`id`, `title`, `content`, `checked_out`, `checked_out_time`, `published`, `params`) VALUES
+(1, 'Default', '', 0, '0000-00-00 00:00:00', 1, ''),
+(2, 'Section/Category', '', 0, '0000-00-00 00:00:00', 1, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_sections`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_sections` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `image` text NOT NULL,
+  `scope` varchar(50) NOT NULL DEFAULT '',
+  `image_position` varchar(30) NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `count` int(11) NOT NULL DEFAULT '0',
+  `params` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_scope` (`scope`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `jos_sections`
+--
+
+INSERT INTO `jos_sections` (`id`, `title`, `name`, `alias`, `image`, `scope`, `image_position`, `description`, `published`, `checked_out`, `checked_out_time`, `ordering`, `access`, `count`, `params`) VALUES
+(1, 'наша продукция', '', '2010-09-06-09-55-25', '', 'content', 'left', '', 1, 62, '2011-01-30 11:00:52', 1, 0, 28, ''),
+(8, 'Информация', '', '2010-09-07-16-15-20', '', 'content', 'left', '', 1, 0, '0000-00-00 00:00:00', 3, 0, 1, ''),
+(9, 'О нас', '', '2010-09-07-17-00-58', '', 'content', 'left', '', 1, 0, '0000-00-00 00:00:00', 4, 0, 1, ''),
+(7, 'Наши услуги', '', '2010-09-06-13-27-59', '', 'content', 'left', '', 1, 0, '0000-00-00 00:00:00', 2, 0, 2, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_session`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_session` (
+  `username` varchar(150) DEFAULT '',
+  `time` varchar(14) DEFAULT '',
+  `session_id` varchar(200) NOT NULL DEFAULT '0',
+  `guest` tinyint(4) DEFAULT '1',
+  `userid` int(11) DEFAULT '0',
+  `usertype` varchar(50) DEFAULT '',
+  `gid` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `client_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `data` longtext,
+  PRIMARY KEY (`session_id`(64)),
+  KEY `whosonline` (`guest`,`usertype`),
+  KEY `userid` (`userid`),
+  KEY `time` (`time`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_session`
+--
+
+INSERT INTO `jos_session` (`username`, `time`, `session_id`, `guest`, `userid`, `usertype`, `gid`, `client_id`, `data`) VALUES
+('', '1297104570', '63369961f42ec398debf1a41bfe7f3f1', 1, 0, '', 0, 0, '__default|a:4:{s:22:"session.client.browser";s:109:"Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.2.13) Gecko/20101203 MRA 5.7 (build 03791) Firefox/3.6.13";s:15:"session.counter";i:1;s:8:"registry";O:9:"JRegistry":3:{s:17:"_defaultNameSpace";s:7:"session";s:9:"_registry";a:1:{s:7:"session";a:1:{s:4:"data";O:8:"stdClass":0:{}}}s:7:"_errors";a:0:{}}s:4:"user";O:5:"JUser":19:{s:2:"id";i:0;s:4:"name";N;s:8:"username";N;s:5:"email";N;s:8:"password";N;s:14:"password_clear";s:0:"";s:8:"usertype";N;s:5:"block";N;s:9:"sendEmail";i:0;s:3:"gid";i:0;s:12:"registerDate";N;s:13:"lastvisitDate";N;s:10:"activation";N;s:6:"params";N;s:3:"aid";i:0;s:5:"guest";i:1;s:7:"_params";O:10:"JParameter":7:{s:4:"_raw";s:0:"";s:4:"_xml";N;s:9:"_elements";a:0:{}s:12:"_elementPath";a:1:{i:0;s:64:"Z:\\home\\seminform.kz\\www\\libraries\\joomla\\html\\parameter\\element";}s:17:"_defaultNameSpace";s:8:"_default";s:9:"_registry";a:1:{s:8:"_default";a:1:{s:4:"data";O:8:"stdClass":0:{}}}s:7:"_errors";a:0:{}}s:9:"_errorMsg";N;s:7:"_errors";a:0:{}}}');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_stats_agents`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_stats_agents` (
+  `agent` varchar(255) NOT NULL DEFAULT '',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `hits` int(11) unsigned NOT NULL DEFAULT '1'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_stats_agents`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_templates_menu`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_templates_menu` (
+  `template` varchar(255) NOT NULL DEFAULT '',
+  `menuid` int(11) NOT NULL DEFAULT '0',
+  `client_id` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`menuid`,`client_id`,`template`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jos_templates_menu`
+--
+
+INSERT INTO `jos_templates_menu` (`template`, `menuid`, `client_id`) VALUES
+('ja_purity', 0, 0),
+('khepri', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_users`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `username` varchar(150) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `password` varchar(100) NOT NULL DEFAULT '',
+  `usertype` varchar(25) NOT NULL DEFAULT '',
+  `block` tinyint(4) NOT NULL DEFAULT '0',
+  `sendEmail` tinyint(4) DEFAULT '0',
+  `gid` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `registerDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `lastvisitDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `activation` varchar(100) NOT NULL DEFAULT '',
+  `params` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `usertype` (`usertype`),
+  KEY `idx_name` (`name`),
+  KEY `gid_block` (`gid`,`block`),
+  KEY `username` (`username`),
+  KEY `email` (`email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=64 ;
+
+--
+-- Dumping data for table `jos_users`
+--
+
+INSERT INTO `jos_users` (`id`, `name`, `username`, `email`, `password`, `usertype`, `block`, `sendEmail`, `gid`, `registerDate`, `lastvisitDate`, `activation`, `params`) VALUES
+(62, 'Administrator', 'admin', 'seminform@bk.ru', '06cb51d30bb33e33df6397298cf5dc1b:HM74c1WMr3qMumeqXaIgnD9iIFVdn9R0', 'Super Administrator', 0, 1, 25, '2010-09-06 11:06:15', '2011-01-30 11:20:13', '', 'admin_language=\nlanguage=\neditor=\nhelpsite=\ntimezone=3\n\n'),
+(63, 'maks', 'maks', 'kolyanmail@mail.ru', '3f9464d53ffca95a831080bf3d81fc88:fvjlNn5maKbfCVHCUU3YPRP7ZLAorn7Y', 'Registered', 0, 0, 18, '2010-09-07 14:31:32', '2011-01-30 10:15:32', '', '\n');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_vvisitcounter`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_vvisitcounter` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `tm` int(11) NOT NULL,
+  `ip` varchar(16) NOT NULL DEFAULT '0.0.0.0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `jos_vvisitcounter`
+--
+
+INSERT INTO `jos_vvisitcounter` (`id`, `tm`, `ip`) VALUES
+(1, 1283855105, '127.0.0.1'),
+(2, 1296371618, '127.0.0.1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jos_weblinks`
+--
+
+CREATE TABLE IF NOT EXISTS `jos_weblinks` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `catid` int(11) NOT NULL DEFAULT '0',
+  `sid` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(250) NOT NULL DEFAULT '',
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `url` varchar(250) NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `hits` int(11) NOT NULL DEFAULT '0',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `checked_out` int(11) NOT NULL DEFAULT '0',
+  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `archived` tinyint(1) NOT NULL DEFAULT '0',
+  `approved` tinyint(1) NOT NULL DEFAULT '1',
+  `params` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `catid` (`catid`,`published`,`archived`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `jos_weblinks`
+--
+
